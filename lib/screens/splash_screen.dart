@@ -63,14 +63,14 @@ class _SpashScreenState extends State<SpashScreen> {
                     Padding(
                       padding: EdgeInsets.only(top: 20.0),
                     ),
-                    Text(
-                      "Loading...",
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 18.0,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    )
+                    // Text(
+                    //   "Loading...",
+                    //   style: TextStyle(
+                    //     color: Colors.black,
+                    //     fontSize: 18.0,
+                    //     fontWeight: FontWeight.bold,
+                    //   ),
+                    // )
                   ],
                 ),
               ),
