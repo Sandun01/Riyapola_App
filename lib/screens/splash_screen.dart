@@ -15,14 +15,14 @@ class _SpashScreenState extends State<SpashScreen> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    Timer(
-        const Duration(seconds: 3),
-        () => {
-              Navigator.pushReplacement(context,
-                  MaterialPageRoute(builder: (_) {
-                return const MyApp();
-              })),
-            });
+    // Timer(
+    //     const Duration(seconds: 3),
+    //     () => {
+    //           Navigator.pushReplacement(context,
+    //               MaterialPageRoute(builder: (_) {
+    //             return const MyApp();
+    //           })),
+    //         });
   }
 
   @override
