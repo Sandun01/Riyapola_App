@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:riyapola_app/screens/login_screen.dart';
 import './screens//splash_screen.dart';
 
 void main() => runApp(MaterialApp(
@@ -8,5 +9,5 @@ void main() => runApp(MaterialApp(
         accentColor: Colors.yellowAccent,
       ),
       debugShowCheckedModeBanner: false,
-      home: const SpashScreen(),
+      home: const Login(),
     ));
