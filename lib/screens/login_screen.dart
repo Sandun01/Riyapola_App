@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class Login extends StatefulWidget {
@@ -29,7 +30,7 @@ class _LoginState extends State<Login> {
                 width: double.infinity,
                 height:620,
                 decoration: BoxDecoration(
-                  color: Colors.blue
+                  color: Color(0xFF0094FF),
                 ),
                 child: Column(
                   children: <Widget>[
@@ -43,7 +44,7 @@ class _LoginState extends State<Login> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(left:20.0,top:20.0,right: 20.0,bottom: 0.0),
+                      padding: const EdgeInsets.only(left:40.0,top:30.0,right: 20.0,bottom: 0.0),
                       child: Row(
                         children: [
                           Text(
@@ -68,7 +69,7 @@ class _LoginState extends State<Login> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(left:20.0,top:20.0,right: 20.0,bottom: 0.0),
+                      padding: const EdgeInsets.only(left:20.0,top:100.0,right: 20.0,bottom: 0.0),
                         child: Form(
                           key: _formKey,
                           child: Column(
@@ -163,32 +164,6 @@ class _LoginState extends State<Login> {
                                   //
                                 ),
                               ),
-                              // Container(
-                              //     child: Row(
-                              //       children: [
-                              //         // Button(
-                              //         //   onPressed: null,
-                              //         //   child: Text('Button', style: TextStyle(
-                              //         //       color: Colors.blue
-                              //         //   )
-                              //         //   ),
-                              //         //   textColor: Colors.white,
-                              //         //   shape: RoundedRectangleBorder(side: BorderSide(
-                              //         //       color: Colors.blue,
-                              //         //       width: 1,
-                              //         //       style: BorderStyle.solid
-                              //         //   ), borderRadius: BorderRadius.circular(50)),
-                              //         // ),
-                              //         OutlinedButton(
-                              //           onPressed: null,
-                              //           style: ButtonStyle(
-                              //             shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0))),
-                              //           ),
-                              //           child: const Text("Button text"),
-                              //         ),
-                              //       ]
-                              //     ),
-                              // ),
                             ],
                           ),
                         ),
@@ -196,6 +171,64 @@ class _LoginState extends State<Login> {
                   ],
                 ),
               ),
+            ),
+            Container(
+              transform: Matrix4.translationValues(0.0, -60.0, 0.0),
+                child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    // Button(
+                    //   onPressed: null,
+                    //   child: Text('Button', style: TextStyle(
+                    //       color: Colors.blue
+                    //   )
+                    //   ),
+                    //   textColor: Colors.white,
+                    //   shape: RoundedRectangleBorder(side: BorderSide(
+                    //       color: Colors.blue,
+                    //       width: 1,
+                    //       style: BorderStyle.solid
+                    //   ), borderRadius: BorderRadius.circular(50)),
+                    // ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                      child: ElevatedButton(
+                        child: Text('Register',
+                          style: TextStyle(
+                            fontSize: 16.0,
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        onPressed: () {},
+                        style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
+                            primary: Colors.white,
+                            padding: EdgeInsets.symmetric(horizontal: 30, vertical: 12),
+
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                      child: ElevatedButton(
+                        child: Text('Login',
+                          style: TextStyle(
+                            fontSize: 16.0,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        onPressed: () {},
+                        style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0)),
+                            primary: Colors.black,
+                            padding: EdgeInsets.symmetric(horizontal: 40, vertical: 12),
+                        ),
+                      ),
+                    ),
+                  ]
+                ),
             ),
           ],
         ),
