@@ -11,10 +11,8 @@ import './screens/edit_advertisement.dart';
 import './screens/welcome_screen.dart';
 import './screens/my_advertisements.dart';
 import './screens/view_advertisement.dart';
-import './screens/user_profile_screen.dart';
-
-//navigation key
-GlobalKey<NavigatorState> mainNavigatorKey = GlobalKey<NavigatorState>();
+import 'screens/chatList.dart';
+import './screens/chatnotifacations.dart';
 
 void main() {
   Color appPrimaryColor = const Color(0xff0094FF);
