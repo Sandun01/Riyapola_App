@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'screens/user_profile_screen.dart';
+import 'screens/seller_profile.dart';
 import './screens/splash_screen.dart';
 import './screens/connection_failed.dart';
 import 'screens/home_screeen.dart';
@@ -15,6 +17,7 @@ import './screens/my_advertisements.dart';
 import './screens/view_advertisement.dart';
 import 'screens/chatList.dart';
 import './screens/chatnotifacations.dart';
+import './screens/seller_profile.dart';
 
 void main() {
   Color appPrimaryColor = const Color(0xff0094FF);
@@ -32,14 +35,16 @@ void main() {
       ),
       debugShowCheckedModeBanner: false,
 
+      // home: SplashScreen(),
+
       //navigation key
       // navigatorKey: mainNavigatorKey,
 
       // home: MyAdvertisements(),
 
-      // home: SplashScreen(),
+      // home: MyAdvertisements(),
 
-      home: my_notications(),
+      // home: SellerProfile(),
 
       routes: {
         //data routes
