@@ -29,7 +29,7 @@ void main() {
       fontFamily: 'Averta',
     ),
     debugShowCheckedModeBanner: false,
-    home: Home(),
+    home: my_notications(),
     routes: {
       //data routes
       '/home': (ctx) => Home(),
@@ -37,6 +37,7 @@ void main() {
       '/edit-add': (ctx) => EditAdvertisement(),
       '/single-chat-view': (ctx) => ChatScreen(),
       '/my-chats': (ctx) => my_chats(),
+      '/my-chat-notifications': (ctx) => my_notications(),
 
       //normal routes
       '/post-add': (ctx) => PostAdvertisement(),
