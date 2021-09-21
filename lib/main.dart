@@ -9,6 +9,7 @@ import './screens/post_advertisement.dart';
 import './screens/edit_advertisement.dart';
 import './screens/welcome_screen.dart';
 import './screens/my_advertisements.dart';
+import './screens/view_advertisement.dart';
 
 void main() {
   Color appPrimaryColor = const Color(0xff0094FF);
@@ -24,6 +25,6 @@ void main() {
       fontFamily: 'Averta',
     ),
     debugShowCheckedModeBanner: false,
-    home: Home(),
+    home: ViewAdvertisement(),
   ));
 }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../widgets/bottom_nav_bar.dart';
+import '../widgets/buttons/home_advertisement_button.dart';
 
 class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
@@ -17,53 +17,43 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      //add search bar
+      //.
+      //.
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        title: const Padding(
-          padding: EdgeInsets.only(
-            top: 20.0,
-            left: 10,
-          ),
-          child: Text(
-            "My Advertisements",
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
+        //   title: const Padding(
+        //     padding: EdgeInsets.only(
+        //       top: 20.0,
+        //       left: 10,
+        //     ),
+        //     child: Text(
+        //       "Home",
+        //       style: TextStyle(
+        //         color: Colors.black,
+        //         fontSize: 20,
+        //         fontWeight: FontWeight.bold,
+        //       ),
+        //     ),
+        //   ),
       ),
       body: SingleChildScrollView(
         child: Column(
           children: [
-            //post add button
+            //Title
             Container(
               width: double.infinity,
               alignment: Alignment.center,
-              margin: const EdgeInsets.only(
-                top: 10.0,
-                bottom: 10.0,
-              ),
-              child: ElevatedButton.icon(
-                icon: const Icon(
-                  Icons.add_circle,
+              // color: Colors.amber,
+              child: const Text(
+                "Vehicles",
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 30,
                 ),
-                label: const Text("Post New Advertisement"),
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateColor.resolveWith(
-                      (states) => Theme.of(context).colorScheme.primary),
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20.0),
-                    ),
-                  ),
-                ),
-                onPressed: _onClickViewAdd,
               ),
             ),
-
             //list view
             Container(
               width: double.infinity,
@@ -71,7 +61,11 @@ class _HomeState extends State<Home> {
               // color: Colors.amber,
               child: Column(
                 children: [
-                  // view_advertisement_Button(),
+                  HomeAdvertisementButton(),
+                  HomeAdvertisementButton(),
+                  HomeAdvertisementButton(),
+                  HomeAdvertisementButton(),
+                  HomeAdvertisementButton(),
                 ],
               ),
             ),

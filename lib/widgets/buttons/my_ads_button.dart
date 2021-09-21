@@ -49,7 +49,6 @@ class _MyAdsButtonState extends State<MyAdsButton> {
               style: const TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 20,
-                // fontFamily: "AguafinaScript",
               ),
             ),
             subtitle: Text(
