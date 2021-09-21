@@ -3,18 +3,25 @@ import 'package:flutter/material.dart';
 
 import './welcome_screen.dart';
 
-class SpashScreen extends StatefulWidget {
-  const SpashScreen({Key? key}) : super(key: key);
+class SplashScreen extends StatefulWidget {
+  const SplashScreen({Key? key}) : super(key: key);
 
   @override
-  _SpashScreenState createState() => _SpashScreenState();
+  _SplashScreenState createState() => _SplashScreenState();
 }
 
-class _SpashScreenState extends State<SpashScreen> {
+class _SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
+    Timer(
+        const Duration(seconds: 3),
+        () => {
+              Navigator.pushReplacement(context,
+                  MaterialPageRoute(builder: (_) {
+                return const WelcomeScreen();
+              })),
+            });
   }
 
   @override

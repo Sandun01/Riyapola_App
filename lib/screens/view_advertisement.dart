@@ -9,10 +9,10 @@ class ViewAdvertisement extends StatefulWidget {
 }
 
 class _ViewAdvertisementState extends State<ViewAdvertisement> {
-  String _title = "Tesla - Model 3";
+  // String _title = "Tesla - Model 3";
   String _category = "Vehicle";
   String _location = "Colombo";
-  String _price = "2000 000";
+  // String _price = "2000 000";
   String _description =
       "Safety is the most important part of the overall Model 3 design. The metal structure is a combination of aluminum and steel, for maximum strength in every area. In a roof-crush test, Model 3 resisted four times its own mass, even with an all-glass roof: that's the same weight as two full-grown African elephants.";
   String _seller = "Nilan Meegoda";
@@ -33,6 +33,12 @@ class _ViewAdvertisementState extends State<ViewAdvertisement> {
   //build
   @override
   Widget build(BuildContext context) {
+    final routeArgs =
+        ModalRoute.of(context)!.settings.arguments as Map<String, String>;
+
+    final _title = routeArgs['title'];
+    final _price = routeArgs['price'];
+
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Theme.of(context).colorScheme.primary,
@@ -78,7 +84,7 @@ class _ViewAdvertisementState extends State<ViewAdvertisement> {
                     left: 30.0,
                   ),
                   child: Text(
-                    _title,
+                    _title!,
                     style: const TextStyle(
                       // fontWeight: FontWeight.bold,
                       fontSize: 40,
@@ -168,7 +174,7 @@ class _ViewAdvertisementState extends State<ViewAdvertisement> {
                       ),
                       // color: Colors.amber,
                       child: Text(
-                        "Price: Rs." + _price,
+                        "Price: Rs." + _price!,
                         style: const TextStyle(
                           // fontWeight: FontWeight.bold,
                           fontSize: 20.0,

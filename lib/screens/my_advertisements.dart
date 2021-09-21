@@ -9,8 +9,12 @@ class MyAdvertisements extends StatefulWidget {
 }
 
 class _MyAdvertisementsState extends State<MyAdvertisements> {
-  void _onClickPostNewAddButton() {
+  void _onClickPostNewAddButton(BuildContext ctx) {
     print("post new add");
+    Navigator.of(ctx).pushNamed(
+      '/post-add',
+      arguments: {},
+    );
   }
 
   @override
@@ -59,7 +63,7 @@ class _MyAdvertisementsState extends State<MyAdvertisements> {
                     ),
                   ),
                 ),
-                onPressed: _onClickPostNewAddButton,
+                onPressed: () => _onClickPostNewAddButton(context),
               ),
             ),
 

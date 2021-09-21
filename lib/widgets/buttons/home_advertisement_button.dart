@@ -9,19 +9,28 @@ class HomeAdvertisementButton extends StatefulWidget {
 }
 
 class _HomeAdvertisementButtonState extends State<HomeAdvertisementButton> {
+  String _id = "123";
   String _title = "Tesla - Model 3";
   String _price = "2000 0000";
   String _location = "Colombo";
 
   //on click
-  void _hadleClick() {
+  void _hadleClick(BuildContext ctx) {
     print("hadle Click add");
+    Navigator.of(ctx).pushNamed(
+      '/view-add',
+      arguments: {
+        'id': _id,
+        'title': _title,
+        'price': _price,
+      },
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: _hadleClick,
+      onTap: () => _hadleClick(context),
       child: Card(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15.0),
