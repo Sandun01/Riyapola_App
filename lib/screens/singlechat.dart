@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 
 String _name = 'Customer';
 
-class ChatMessage extends StatelessWidget {
-  const ChatMessage({required this.text, required this.animationController});
+class chat_message extends StatelessWidget {
+  const chat_message({required this.text, required this.animationController});
   final String text;
   final AnimationController animationController;
 
@@ -55,7 +55,7 @@ class ChatScreen extends StatefulWidget {
 }
 
 class _ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
-  final List<ChatMessage> _messages = [];
+  final List<chat_message> _messages = [];
   final _textController = TextEditingController();
   final FocusNode _focusNode = FocusNode();
   bool _isComposing = false;
@@ -143,7 +143,7 @@ class _ChatScreenState extends State<ChatScreen> with TickerProviderStateMixin {
     setState(() {
       _isComposing = false;
     });
-    var message = ChatMessage(
+    var message = chat_message(
       text: text,
       animationController: AnimationController(
         duration: const Duration(milliseconds: 700),

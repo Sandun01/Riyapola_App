@@ -12,6 +12,8 @@ import './screens/edit_advertisement.dart';
 import './screens/welcome_screen.dart';
 import './screens/my_advertisements.dart';
 import './screens/view_advertisement.dart';
+import 'screens/chatList.dart';
+import './screens/chatnotifacations.dart';
 
 void main() {
   Color appPrimaryColor = const Color(0xff0094FF);
@@ -33,6 +35,8 @@ void main() {
       '/home': (ctx) => Home(),
       '/view-add': (ctx) => ViewAdvertisement(),
       '/edit-add': (ctx) => EditAdvertisement(),
+      '/single-chat-view': (ctx) => ChatScreen(),
+      '/my-chats': (ctx) => my_chats(),
 
       //normal routes
       '/post-add': (ctx) => PostAdvertisement(),
