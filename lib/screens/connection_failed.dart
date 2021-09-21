@@ -21,7 +21,8 @@ class ConnectionFailed extends StatelessWidget {
                   children: [
                     const Image(
                       image: AssetImage(
-                          'assets/images/connection_failed_image.png'),
+                        'assets/images/connection_failed_image.png',
+                      ),
                       height: 300,
                       width: 300,
                     ),
@@ -46,7 +47,8 @@ class ConnectionFailed extends StatelessWidget {
                       // ignore: prefer_const_constructors
                       style: ButtonStyle(
                         backgroundColor: MaterialStateColor.resolveWith(
-                            (states) => Theme.of(context).colorScheme.primary),
+                          (states) => Theme.of(context).colorScheme.primary,
+                        ),
                       ),
                       child: const Text(
                         'Retry',
