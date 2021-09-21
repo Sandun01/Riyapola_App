@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'screens/user_profile_screen.dart';
 import 'screens/seller_profile.dart';
 import './screens/splash_screen.dart';
 import './screens/connection_failed.dart';
@@ -21,6 +22,6 @@ void main() {
       fontFamily: 'Averta',
     ),
     debugShowCheckedModeBanner: false,
-    home: Login(),
+    home: SellerProfile(),
   ));
 }
