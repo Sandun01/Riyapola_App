@@ -2,6 +2,8 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../screens/register_screen.dart';
+
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
 
@@ -15,6 +17,17 @@ class _LoginState extends State<Login> {
   late bool _passwordVisible = true;
   void initState() {
     _passwordVisible = false;
+  }
+
+  void _RegisterButtonPress(BuildContext ctx) {
+    print('_RegisterButtonPress');
+    Navigator.of(ctx).pushReplacement(
+      MaterialPageRoute(
+        builder: (_) {
+          return Register();
+        },
+      ),
+    );
   }
 
   @override
@@ -203,7 +216,7 @@ class _LoginState extends State<Login> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    onPressed: () {},
+                    onPressed: () => _RegisterButtonPress(context),
                     style: ElevatedButton.styleFrom(
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(30.0)),

@@ -5,12 +5,13 @@ import 'screens/home_screeen.dart';
 import 'screens/main_screen.dart';
 import './screens/category_screen.dart';
 import './screens/login_screen.dart';
-// import './screens/register_screen.dart';
+import './screens/register_screen.dart';
 import './screens/post_advertisement.dart';
 import './screens/edit_advertisement.dart';
 import './screens/welcome_screen.dart';
 import './screens/my_advertisements.dart';
 import './screens/view_advertisement.dart';
+import './screens/user_profile_screen.dart';
 
 //navigation key
 GlobalKey<NavigatorState> mainNavigatorKey = GlobalKey<NavigatorState>();
@@ -36,6 +37,7 @@ void main() {
 
       // home: MyAdvertisements(),
       home: SplashScreen(),
+
       routes: {
         //data routes
         '/home': (ctx) => Home(),
@@ -45,7 +47,7 @@ void main() {
         //normal routes
         '/post-add': (ctx) => PostAdvertisement(),
         '/login': (ctx) => Login(),
-        // '/register': (ctx) => Login(),
+        '/register': (ctx) => Register(),
 
         '/connection-failed': (ctx) => ConnectionFailed(),
       },
