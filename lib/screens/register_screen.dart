@@ -1,14 +1,16 @@
 import 'dart:async';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 
-class Login extends StatefulWidget {
-  const Login({Key? key}) : super(key: key);
+class Register extends StatefulWidget {
+  const Register({Key? key}) : super(key: key);
 
   @override
-  _LoginState createState() => _LoginState();
+  _RegisterState createState() => _RegisterState();
 }
 
-class _LoginState extends State<Login> {
+class _RegisterState extends State<Register> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   late String _username;
   late bool _passwordVisible = true;
@@ -19,166 +21,348 @@ class _LoginState extends State<Login> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: SingleChildScrollView(
-      child: Column(
-        children: <Widget>[
-          ClipPath(
-            clipper: MyClipper(),
-            child: Container(
-              width: double.infinity,
-              height: 620,
-              decoration: BoxDecoration(color: Colors.blue),
+      body: SingleChildScrollView(
+        child: Column(
+          children: <Widget>[
+            ClipPath(
+              clipper: MyClipper(),
+              child: Container(
+                width: double.infinity,
+                height: 700,
+                decoration: BoxDecoration(
+                  color: Color(0xFF0094FF),
+                ),
+                child: Column(
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.only(top: 40.0),
+                      child: Text(
+                        "Riyapola",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 40,
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(
+                          left: 40.0, top: 30.0, right: 20.0, bottom: 0.0),
+                      child: Row(
+                        children: [
+                          Text(
+                            "Register",
+                            style: TextStyle(
+                              shadows: [
+                                Shadow(
+                                    color: Colors.white, offset: Offset(0, -10))
+                              ],
+                              color: Colors.transparent,
+                              decoration: TextDecoration.underline,
+                              decorationColor: Colors.white,
+                              decorationThickness: 4,
+                              decorationStyle: TextDecorationStyle.solid,
+                              fontSize: 20,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(
+                          left: 20.0, top: 0.0, right: 20.0, bottom: 0.0),
+                      child: Form(
+                        key: _formKey,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 20.0, vertical: 15.0),
+                              child: TextFormField(
+                                decoration: const InputDecoration(
+                                  icon: const Icon(Icons.person,
+                                      color: Colors.white),
+                                  hintText: 'Full Name',
+                                  hintStyle: TextStyle(
+                                    color: Colors.white,
+                                  ),
+                                  labelText: "Full Name",
+                                  labelStyle: TextStyle(
+                                    color: Colors.white,
+                                  ),
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(color: Colors.white),
+                                  ),
+                                  focusedBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(color: Colors.white),
+                                  ),
+                                  border: UnderlineInputBorder(
+                                    borderSide: BorderSide(color: Colors.white),
+                                  ),
+                                ),
+                                validator: (value) {
+                                  if (value == null) {
+                                    return 'Usename cannot be empty';
+                                  }
+                                  return null;
+                                },
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
+                                onSaved: (value) {
+                                  _username = value.toString();
+                                },
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 20.0, vertical: 15.0),
+                              child: TextFormField(
+                                decoration: const InputDecoration(
+                                  icon: const Icon(Icons.mobile_friendly,
+                                      color: Colors.white),
+                                  hintText: 'Mobile Number',
+                                  hintStyle: TextStyle(
+                                    color: Colors.white,
+                                  ),
+                                  labelText: "Mobile Number",
+                                  labelStyle: TextStyle(
+                                    color: Colors.white,
+                                  ),
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(color: Colors.white),
+                                  ),
+                                  focusedBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(color: Colors.white),
+                                  ),
+                                  border: UnderlineInputBorder(
+                                    borderSide: BorderSide(color: Colors.white),
+                                  ),
+                                ),
+                                validator: (value) {
+                                  if (value == null) {
+                                    return 'Usename cannot be empty';
+                                  }
+                                  return null;
+                                },
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
+                                onSaved: (value) {
+                                  _username = value.toString();
+                                },
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 20.0, vertical: 15.0),
+                              child: TextFormField(
+                                decoration: const InputDecoration(
+                                  icon: const Icon(Icons.email,
+                                      color: Colors.white),
+                                  hintText: 'Email',
+                                  hintStyle: TextStyle(
+                                    color: Colors.white,
+                                  ),
+                                  labelText: "Email",
+                                  labelStyle: TextStyle(
+                                    color: Colors.white,
+                                  ),
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(color: Colors.white),
+                                  ),
+                                  focusedBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(color: Colors.white),
+                                  ),
+                                  border: UnderlineInputBorder(
+                                    borderSide: BorderSide(color: Colors.white),
+                                  ),
+                                ),
+                                validator: (value) {
+                                  if (value == null) {
+                                    return 'Usename cannot be empty';
+                                  }
+                                  return null;
+                                },
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
+                                onSaved: (value) {
+                                  _username = value.toString();
+                                },
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 20.0, vertical: 15.0),
+                              child: TextFormField(
+                                keyboardType: TextInputType.text,
+                                // controller: _userPasswordController,
+                                obscureText:
+                                    !_passwordVisible, //This will obscure text dynamically
+                                decoration: const InputDecoration(
+                                  icon: const Icon(Icons.password,
+                                      color: Colors.white),
+                                  hintText: 'Password',
+                                  hintStyle: TextStyle(
+                                    color: Colors.white,
+                                  ),
+                                  labelText: "Password",
+                                  labelStyle: TextStyle(
+                                    color: Colors.white,
+                                  ),
+                                  // suffixIcon: Icon(Icons.visibility),
+                                  // suffixIcon: IconButton(
+                                  //   icon: Icon(_passwordVisible ? Icons.visibility : Icons.visibility_off,
+                                  //     // color: Theme.of(context).primaryColorDark,
+                                  //   ),
+                                  //   onPressed: () {
+                                  //     setState(() {
+                                  //       _passwordVisible = !_passwordVisible;
+                                  //     }),
+                                  //   },
+                                  // ),
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(color: Colors.white),
+                                  ),
+                                  focusedBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(color: Colors.white),
+                                  ),
+                                  border: UnderlineInputBorder(
+                                    borderSide: BorderSide(color: Colors.white),
+                                  ),
+                                ),
+                                validator: (value) {
+                                  if (value == null) {
+                                    return 'Password cannot be empty';
+                                  } else if (value.length < 6) {
+                                    return 'Password must be more than 6 characters';
+                                  }
+                                  return null;
+                                },
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
+                                //
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 20.0, vertical: 15.0),
+                              child: TextFormField(
+                                keyboardType: TextInputType.text,
+                                // controller: _userPasswordController,
+                                obscureText:
+                                    !_passwordVisible, //This will obscure text dynamically
+                                decoration: const InputDecoration(
+                                  icon: const Icon(Icons.password,
+                                      color: Colors.white),
+                                  hintText: 'Confirm Password',
+                                  hintStyle: TextStyle(
+                                    color: Colors.white,
+                                  ),
+                                  labelText: "Confirm Password",
+                                  labelStyle: TextStyle(
+                                    color: Colors.white,
+                                  ),
+                                  // suffixIcon: Icon(Icons.visibility),
+                                  // suffixIcon: IconButton(
+                                  //   icon: Icon(_passwordVisible ? Icons.visibility : Icons.visibility_off,
+                                  //     // color: Theme.of(context).primaryColorDark,
+                                  //   ),
+                                  //   onPressed: () {
+                                  //     setState(() {
+                                  //       _passwordVisible = !_passwordVisible;
+                                  //     }),
+                                  //   },
+                                  // ),
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(color: Colors.white),
+                                  ),
+                                  focusedBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(color: Colors.white),
+                                  ),
+                                  border: UnderlineInputBorder(
+                                    borderSide: BorderSide(color: Colors.white),
+                                  ),
+                                ),
+                                validator: (value) {
+                                  if (value == null) {
+                                    return 'Password cannot be empty';
+                                  } else if (value.length < 6) {
+                                    return 'Password must be more than 6 characters';
+                                  }
+                                  return null;
+                                },
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
+                                //
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Container(
+              transform: Matrix4.translationValues(0.0, -60.0, 0.0),
               child: Column(
-                children: <Widget>[
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  // Button(
+                  //   onPressed: null,
+                  //   child: Text('Button', style: TextStyle(
+                  //       color: Colors.blue
+                  //   )
+                  //   ),
+                  //   textColor: Colors.white,
+                  //   shape: RoundedRectangleBorder(side: BorderSide(
+                  //       color: Colors.blue,
+                  //       width: 1,
+                  //       style: BorderStyle.solid
+                  //   ), borderRadius: BorderRadius.circular(50)),
+                  // ),
+
                   Padding(
-                    padding: const EdgeInsets.only(top: 40.0),
-                    child: Text(
-                      "Riyapola",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 40,
+                    padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                    child: ElevatedButton(
+                      child: Text(
+                        'Register',
+                        style: TextStyle(
+                          fontSize: 16.0,
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                      onPressed: () {},
+                      style: ElevatedButton.styleFrom(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30.0)),
+                        primary: Colors.black,
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 40, vertical: 12),
                       ),
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(
-                        left: 20.0, top: 20.0, right: 20.0, bottom: 0.0),
-                    child: Row(
-                      children: [
-                        Text(
-                          "Login",
-                          style: TextStyle(
-                            shadows: [
-                              Shadow(
-                                  color: Colors.white, offset: Offset(0, -10))
-                            ],
-                            color: Colors.transparent,
-                            decoration: TextDecoration.underline,
-                            decorationColor: Colors.white,
-                            decorationThickness: 4,
-                            decorationStyle: TextDecorationStyle.solid,
-                            fontSize: 20,
+                    padding: const EdgeInsets.only(top: 10.0),
+                    child: RichText(
+                      text: new TextSpan(
+                        children: [
+                          new TextSpan(
+                            text: 'Already have an account? ',
+                            style: new TextStyle(color: Colors.black),
                           ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                        left: 20.0, top: 20.0, right: 20.0, bottom: 0.0),
-                    child: Form(
-                      key: _formKey,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Padding(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 20.0, vertical: 30.0),
-                            child: TextFormField(
-                              decoration: const InputDecoration(
-                                icon: const Icon(Icons.person,
-                                    color: Colors.white),
-                                hintText: 'Mobile Number or Email',
-                                hintStyle: TextStyle(
-                                  color: Colors.white,
-                                ),
-                                labelText: "Mobile Number or Email",
-                                labelStyle: TextStyle(
-                                  color: Colors.white,
-                                ),
-                                enabledBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.white),
-                                ),
-                                focusedBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.white),
-                                ),
-                                border: UnderlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.white),
-                                ),
-                              ),
-                              validator: (value) {
-                                if (value == null) {
-                                  return 'Usename cannot be empty';
-                                }
-                                return null;
-                              },
-                              style: TextStyle(
-                                color: Colors.white,
-                              ),
-                              onSaved: (value) {
-                                _username = value.toString();
-                              },
-                            ),
+                          new TextSpan(
+                            text: 'Log In',
+                            style: new TextStyle(color: Colors.blue),
+                            recognizer: new TapGestureRecognizer()
+                              ..onTap = () {},
                           ),
-                          Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 20.0),
-                            child: TextFormField(
-                              keyboardType: TextInputType.text,
-                              // controller: _userPasswordController,
-                              obscureText:
-                                  !_passwordVisible, //This will obscure text dynamically
-                              decoration: const InputDecoration(
-                                icon: const Icon(Icons.password,
-                                    color: Colors.white),
-                                hintText: 'Password',
-                                hintStyle: TextStyle(
-                                  color: Colors.white,
-                                ),
-                                labelText: "Password",
-                                labelStyle: TextStyle(
-                                  color: Colors.white,
-                                ),
-                                // suffixIcon: Icon(Icons.visibility),
-                                // suffixIcon: IconButton(
-                                //   icon: Icon(_passwordVisible ? Icons.visibility : Icons.visibility_off,
-                                //     // color: Theme.of(context).primaryColorDark,
-                                //   ),
-                                //   onPressed: () {
-                                //     setState(() {
-                                //       _passwordVisible = !_passwordVisible;
-                                //     }),
-                                //   },
-                                // ),
-                                enabledBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.white),
-                                ),
-                                focusedBorder: UnderlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.white),
-                                ),
-                                border: UnderlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.white),
-                                ),
-                              ),
-                              validator: (value) {
-                                if (value == null) {
-                                  return 'Password cannot be empty';
-                                } else if (value.length < 6) {
-                                  return 'Password must be more than 6 characters';
-                                }
-                                return null;
-                              },
-                              style: TextStyle(
-                                color: Colors.white,
-                              ),
-                              //
-                            ),
-                          ),
-                          new Container(
-                              padding:
-                                  const EdgeInsets.only(left: 150.0, top: 40.0),
-                              child: new RaisedButton(
-                                child: const Text('Submit'),
-                                onPressed: () {
-                                  //It returns true if the form is valid, otherwise returns false
-                                  if (_formKey.currentState == null) {
-                                    // If the form is valid, display a Snackbar.
-                                    Scaffold.of(context).showSnackBar(SnackBar(
-                                        content:
-                                            Text('Data is in processing.')));
-                                  }
-                                },
-                              )),
                         ],
                       ),
                     ),
@@ -186,10 +370,10 @@ class _LoginState extends State<Login> {
                 ],
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
-    ));
+    );
   }
 }
 

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class Login extends StatefulWidget {
@@ -27,11 +28,13 @@ class _LoginState extends State<Login> {
               child: Container(
                 width: double.infinity,
                 height: 620,
-                decoration: const BoxDecoration(color: Colors.blue),
+                decoration: BoxDecoration(
+                  color: Color(0xFF0094FF),
+                ),
                 child: Column(
                   children: <Widget>[
-                    const Padding(
-                      padding: EdgeInsets.only(top: 40.0),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 40.0),
                       child: Text(
                         "Riyapola",
                         style: TextStyle(
@@ -42,9 +45,9 @@ class _LoginState extends State<Login> {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(
-                          left: 20.0, top: 20.0, right: 20.0, bottom: 0.0),
+                          left: 40.0, top: 30.0, right: 20.0, bottom: 0.0),
                       child: Row(
-                        children: const [
+                        children: [
                           Text(
                             "Login",
                             style: TextStyle(
@@ -65,7 +68,7 @@ class _LoginState extends State<Login> {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(
-                          left: 20.0, top: 20.0, right: 20.0, bottom: 0.0),
+                          left: 20.0, top: 100.0, right: 20.0, bottom: 0.0),
                       child: Form(
                         key: _formKey,
                         child: Column(
@@ -76,7 +79,8 @@ class _LoginState extends State<Login> {
                                   horizontal: 20.0, vertical: 30.0),
                               child: TextFormField(
                                 decoration: const InputDecoration(
-                                  icon: Icon(Icons.person, color: Colors.white),
+                                  icon: const Icon(Icons.person,
+                                      color: Colors.white),
                                   hintText: 'Mobile Number or Email',
                                   hintStyle: TextStyle(
                                     color: Colors.white,
@@ -101,7 +105,7 @@ class _LoginState extends State<Login> {
                                   }
                                   return null;
                                 },
-                                style: const TextStyle(
+                                style: TextStyle(
                                   color: Colors.white,
                                 ),
                                 onSaved: (value) {
@@ -118,8 +122,8 @@ class _LoginState extends State<Login> {
                                 obscureText:
                                     !_passwordVisible, //This will obscure text dynamically
                                 decoration: const InputDecoration(
-                                  icon:
-                                      Icon(Icons.password, color: Colors.white),
+                                  icon: const Icon(Icons.password,
+                                      color: Colors.white),
                                   hintText: 'Password',
                                   hintStyle: TextStyle(
                                     color: Colors.white,
@@ -157,38 +161,12 @@ class _LoginState extends State<Login> {
                                   }
                                   return null;
                                 },
-                                style: const TextStyle(
+                                style: TextStyle(
                                   color: Colors.white,
                                 ),
                                 //
                               ),
                             ),
-                            // Container(
-                            //     child: Row(
-                            //       children: [
-                            //         // Button(
-                            //         //   onPressed: null,
-                            //         //   child: Text('Button', style: TextStyle(
-                            //         //       color: Colors.blue
-                            //         //   )
-                            //         //   ),
-                            //         //   textColor: Colors.white,
-                            //         //   shape: RoundedRectangleBorder(side: BorderSide(
-                            //         //       color: Colors.blue,
-                            //         //       width: 1,
-                            //         //       style: BorderStyle.solid
-                            //         //   ), borderRadius: BorderRadius.circular(50)),
-                            //         // ),
-                            //         OutlinedButton(
-                            //           onPressed: null,
-                            //           style: ButtonStyle(
-                            //             shape: MaterialStateProperty.all(RoundedRectangleBorder(borderRadius: BorderRadius.circular(30.0))),
-                            //           ),
-                            //           child: const Text("Button text"),
-                            //         ),
-                            //       ]
-                            //     ),
-                            // ),
                           ],
                         ),
                       ),
@@ -196,6 +174,67 @@ class _LoginState extends State<Login> {
                   ],
                 ),
               ),
+            ),
+            Container(
+              transform: Matrix4.translationValues(0.0, -60.0, 0.0),
+              child:
+                  Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                // Button(
+                //   onPressed: null,
+                //   child: Text('Button', style: TextStyle(
+                //       color: Colors.blue
+                //   )
+                //   ),
+                //   textColor: Colors.white,
+                //   shape: RoundedRectangleBorder(side: BorderSide(
+                //       color: Colors.blue,
+                //       width: 1,
+                //       style: BorderStyle.solid
+                //   ), borderRadius: BorderRadius.circular(50)),
+                // ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                  child: ElevatedButton(
+                    child: Text(
+                      'Register',
+                      style: TextStyle(
+                        fontSize: 16.0,
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    onPressed: () {},
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.0)),
+                      primary: Colors.white,
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 30, vertical: 12),
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                  child: ElevatedButton(
+                    child: Text(
+                      'Login',
+                      style: TextStyle(
+                        fontSize: 16.0,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    onPressed: () {},
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.0)),
+                      primary: Colors.black,
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 40, vertical: 12),
+                    ),
+                  ),
+                ),
+              ]),
             ),
           ],
         ),
