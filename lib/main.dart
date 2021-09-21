@@ -42,7 +42,7 @@ void main() {
 
       // home: MyAdvertisements(),
 
-      // home: MyAdvertisements(),
+      home: my_notications(),
 
       // home: SellerProfile(),
 
