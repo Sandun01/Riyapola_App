@@ -33,6 +33,9 @@ class CategoryScreen extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         body: SingleChildScrollView(
+          padding: const EdgeInsets.only(
+            top: 20,
+          ),
           child: Center(
             child: Card(
               margin: const EdgeInsets.all(20.0),
