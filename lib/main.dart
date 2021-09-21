@@ -6,6 +6,7 @@ import './widgets/bottom_nav_bar.dart';
 import 'screens/category_screen.dart';
 import 'screens/login_screen.dart';
 import 'screens/register_screen.dart';
+import 'screens/user_profile_screen.dart';
 
 void main() {
   Color appPrimaryColor = const Color(0xff0094FF);
@@ -21,6 +22,6 @@ void main() {
       fontFamily: 'Averta',
     ),
     debugShowCheckedModeBanner: false,
-    home: Register(),
+    home: Profile (),
   ));
 }
