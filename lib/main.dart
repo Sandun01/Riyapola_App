@@ -6,6 +6,8 @@ import 'screens/main_screen.dart';
 import './screens/category_screen.dart';
 import './screens/login_screen.dart';
 import './screens/register_screen.dart';
+import './screens/singlechat.dart';
+// import './screens/register_screen.dart';
 import './screens/post_advertisement.dart';
 import './screens/edit_advertisement.dart';
 import './screens/welcome_screen.dart';
@@ -31,16 +33,24 @@ void main() {
       debugShowCheckedModeBanner: false,
 
       //navigation key
-      navigatorKey: mainNavigatorKey,
+      // navigatorKey: mainNavigatorKey,
 
       // home: MyAdvertisements(),
-      home: SplashScreen(),
+
+      // home: SplashScreen(),
+
+      home: my_notications(),
 
       routes: {
         //data routes
         '/home': (ctx) => Home(),
         '/view-add': (ctx) => ViewAdvertisement(),
         '/edit-add': (ctx) => EditAdvertisement(),
+
+        //notifications
+        '/single-chat-view': (ctx) => ChatScreen(),
+        '/my-chats': (ctx) => my_chats(),
+        '/my-chat-notifications': (ctx) => my_notications(),
 
         //normal routes
         '/post-add': (ctx) => PostAdvertisement(),
