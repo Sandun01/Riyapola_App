@@ -2,15 +2,17 @@ import 'package:flutter/material.dart';
 
 import 'home_screeen.dart';
 import 'category_screen.dart';
+import 'chatList.dart';
+import 'user_profile_screen.dart';
 
-class BottomNavBar extends StatefulWidget {
-  const BottomNavBar({Key? key}) : super(key: key);
+class MainScreen extends StatefulWidget {
+  const MainScreen({Key? key}) : super(key: key);
 
   @override
-  _BottomNavBarState createState() => _BottomNavBarState();
+  _MainScreenState createState() => _MainScreenState();
 }
 
-class _BottomNavBarState extends State<BottomNavBar> {
+class _MainScreenState extends State<MainScreen> {
   // nav bar 1
   int _selectedIndex = 0;
 
@@ -24,6 +26,9 @@ class _BottomNavBarState extends State<BottomNavBar> {
   List<Widget> _widgetOptions = <Widget>[
     Home(),
     CategoryScreen(),
+    CategoryScreen(), //notications
+    my_chats(),
+    Profile(),
   ];
 
   @override

@@ -9,7 +9,6 @@ import './screens/category_screen.dart';
 import './screens/login_screen.dart';
 import './screens/register_screen.dart';
 import './screens/singlechat.dart';
-// import './screens/register_screen.dart';
 import './screens/post_advertisement.dart';
 import './screens/edit_advertisement.dart';
 import './screens/welcome_screen.dart';
@@ -36,15 +35,12 @@ void main() {
       debugShowCheckedModeBanner: false,
 
       // home: SplashScreen(),
-
-      //navigation key
-      // navigatorKey: mainNavigatorKey,
-
       // home: MyAdvertisements(),
 
-      home: my_notications(),
+      // home: my_notications(),
 
       // home: SellerProfile(),
+      home: MainScreen(),
 
       routes: {
         //data routes
