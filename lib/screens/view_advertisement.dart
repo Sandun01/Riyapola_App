@@ -18,15 +18,23 @@ class _ViewAdvertisementState extends State<ViewAdvertisement> {
   String _seller = "Nilan Meegoda";
   String _ratingVal = "5.0";
 
-  void _onclickViewSellerProfile() {
+  void _onclickViewSellerProfile(BuildContext ctx) {
     print("_onclickViewSellerProfile");
+    Navigator.of(ctx).pushNamed(
+      '/seller-profile',
+      arguments: {},
+    );
   }
 
-  void _onclickChatWithSeller() {
+  void _onclickChatWithSeller(BuildContext ctx) {
     print("_onclickChatWithSeller");
+    Navigator.of(ctx).pushNamed(
+      '/single-chat-view',
+      arguments: {},
+    );
   }
 
-  void _onclickAddFeedback() {
+  void _onclickAddFeedback(BuildContext ctx) {
     print("_onclickAddFeedback");
   }
 
@@ -333,7 +341,7 @@ class _ViewAdvertisementState extends State<ViewAdvertisement> {
                           ),
                         ),
                       ),
-                      onPressed: _onclickViewSellerProfile,
+                      onPressed: () => _onclickViewSellerProfile(context),
                     ),
                     //Chat with Seller button
                     ElevatedButton.icon(
@@ -359,7 +367,7 @@ class _ViewAdvertisementState extends State<ViewAdvertisement> {
                           ),
                         ),
                       ),
-                      onPressed: _onclickChatWithSeller,
+                      onPressed: () => _onclickChatWithSeller(context),
                     ),
                     // spacing
                     const SizedBox(
@@ -443,7 +451,7 @@ class _ViewAdvertisementState extends State<ViewAdvertisement> {
                           bottom: 10.0,
                         ),
                         child: ElevatedButton(
-                          onPressed: _onclickAddFeedback,
+                          onPressed: () => _onclickAddFeedback(context),
                           child: const Text(
                             "Write Feedback",
                             style: TextStyle(

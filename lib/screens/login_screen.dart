@@ -2,8 +2,6 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../screens/register_screen.dart';
-
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
 
@@ -21,12 +19,17 @@ class _LoginState extends State<Login> {
 
   void _RegisterButtonPress(BuildContext ctx) {
     print('_RegisterButtonPress');
-    Navigator.of(ctx).pushReplacement(
-      MaterialPageRoute(
-        builder: (_) {
-          return Register();
-        },
-      ),
+    Navigator.of(ctx).pushReplacementNamed(
+      '/register',
+      arguments: {},
+    );
+  }
+
+  void _skipBottonPress(BuildContext ctx) {
+    print('Skip BottonPress');
+    Navigator.of(ctx).pushReplacementNamed(
+      '/home',
+      arguments: {},
     );
   }
 
@@ -46,6 +49,28 @@ class _LoginState extends State<Login> {
                 ),
                 child: Column(
                   children: <Widget>[
+                    //skip text
+                    Container(
+                      padding: const EdgeInsets.only(
+                        top: 35.0,
+                        right: 20.0,
+                      ),
+                      alignment: Alignment.topRight,
+                      child: TextButton(
+                        style: TextButton.styleFrom(
+                          textStyle: const TextStyle(fontSize: 20),
+                        ),
+                        onPressed: () => _skipBottonPress(context),
+                        child: const Text(
+                          "Skip",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                            fontFamily: 'Averta',
+                          ),
+                        ),
+                      ),
+                    ),
                     Padding(
                       padding: const EdgeInsets.only(top: 40.0),
                       child: Text(
@@ -190,64 +215,93 @@ class _LoginState extends State<Login> {
             ),
             Container(
               transform: Matrix4.translationValues(0.0, -60.0, 0.0),
-              child:
-                  Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                // Button(
-                //   onPressed: null,
-                //   child: Text('Button', style: TextStyle(
-                //       color: Colors.blue
-                //   )
-                //   ),
-                //   textColor: Colors.white,
-                //   shape: RoundedRectangleBorder(side: BorderSide(
-                //       color: Colors.blue,
-                //       width: 1,
-                //       style: BorderStyle.solid
-                //   ), borderRadius: BorderRadius.circular(50)),
-                // ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                  child: ElevatedButton(
-                    child: Text(
-                      'Register',
-                      style: TextStyle(
-                        fontSize: 16.0,
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    // Button(
+                    //   onPressed: null,
+                    //   child: Text('Button', style: TextStyle(
+                    //       color: Colors.blue
+                    //   )
+                    //   ),
+                    //   textColor: Colors.white,
+                    //   shape: RoundedRectangleBorder(side: BorderSide(
+                    //       color: Colors.blue,
+                    //       width: 1,
+                    //       style: BorderStyle.solid
+                    //   ), borderRadius: BorderRadius.circular(50)),
+                    // ),
+                    // Padding(
+                    // padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                    // child: ElevatedButton(
+                    //   child: Text(
+                    //     'Register',
+                    //     style: TextStyle(
+                    //       fontSize: 16.0,
+                    //       color: Colors.black,
+                    //       fontWeight: FontWeight.bold,
+                    //     ),
+                    //   ),
+                    //   onPressed: () => _RegisterButtonPress(context),
+                    //   style: ElevatedButton.styleFrom(
+                    //     shape: RoundedRectangleBorder(
+                    //         borderRadius: BorderRadius.circular(30.0)),
+                    //     primary: Colors.white,
+                    //     padding:
+                    //         EdgeInsets.symmetric(horizontal: 30, vertical: 12),
+                    //   ),
+                    // ),
+                    // ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                      child: ElevatedButton(
+                        child: Text(
+                          'Login',
+                          style: TextStyle(
+                            fontSize: 16.0,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        onPressed: () {},
+                        style: ElevatedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30.0)),
+                          primary: Colors.black,
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 40, vertical: 12),
+                        ),
                       ),
                     ),
-                    onPressed: () => _RegisterButtonPress(context),
-                    style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30.0)),
-                      primary: Colors.white,
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 30, vertical: 12),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        //sign up text
+                        TextButton(
+                          style: TextButton.styleFrom(
+                            textStyle: const TextStyle(fontSize: 20),
+                          ),
+                          onPressed: () => _RegisterButtonPress(context),
+                          child: const Text(
+                            "Sign Up",
+                            style: TextStyle(
+                              color: Colors.blue,
+                              fontSize: 20,
+                              fontFamily: 'Averta',
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        const Text(
+                          "to Start Explore",
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 20,
+                          ),
+                        ),
+                      ],
                     ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                  child: ElevatedButton(
-                    child: Text(
-                      'Login',
-                      style: TextStyle(
-                        fontSize: 16.0,
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    onPressed: () {},
-                    style: ElevatedButton.styleFrom(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30.0)),
-                      primary: Colors.black,
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 40, vertical: 12),
-                    ),
-                  ),
-                ),
-              ]),
+                  ]),
             ),
           ],
         ),

@@ -34,17 +34,19 @@ void main() {
       ),
       debugShowCheckedModeBanner: false,
 
-      // home: SplashScreen(),
+      //-----main
+      home: SplashScreen(),
+
+      //-----testing
       // home: MyAdvertisements(),
-
       // home: my_notications(),
-
       // home: SellerProfile(),
-      home: MainScreen(),
+      // home: MainScreen(),
 
       routes: {
         //data routes
-        '/home': (ctx) => Home(),
+        '/home': (ctx) => MainScreen(),
+        // '/home': (ctx) => Home(),
         '/view-add': (ctx) => ViewAdvertisement(),
         '/edit-add': (ctx) => EditAdvertisement(),
 
@@ -53,8 +55,12 @@ void main() {
         '/my-chats': (ctx) => my_chats(),
         '/my-chat-notifications': (ctx) => my_notications(),
 
+        '/seller-profile': (ctx) => SellerProfile(),
+
         //normal routes
         '/post-add': (ctx) => PostAdvertisement(),
+        '/my-ads': (ctx) => MyAdvertisements(),
+
         '/login': (ctx) => Login(),
         '/register': (ctx) => Register(),
 

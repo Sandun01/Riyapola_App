@@ -18,6 +18,22 @@ class _RegisterState extends State<Register> {
     _passwordVisible = false;
   }
 
+  void _signUpButtonPress(BuildContext ctx) {
+    print('Sign In BottonPress');
+    Navigator.of(ctx).pushReplacementNamed(
+      '/login',
+      arguments: {},
+    );
+  }
+
+  void _skipBottonPress(BuildContext ctx) {
+    print('Skip BottonPress');
+    Navigator.of(ctx).pushReplacementNamed(
+      '/home',
+      arguments: {},
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,6 +50,28 @@ class _RegisterState extends State<Register> {
                 ),
                 child: Column(
                   children: <Widget>[
+                    //skip text
+                    Container(
+                      padding: const EdgeInsets.only(
+                        top: 35.0,
+                        right: 20.0,
+                      ),
+                      alignment: Alignment.topRight,
+                      child: TextButton(
+                        style: TextButton.styleFrom(
+                          textStyle: const TextStyle(fontSize: 20),
+                        ),
+                        onPressed: () => _skipBottonPress(context),
+                        child: const Text(
+                          "Skip",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                            fontFamily: 'Averta',
+                          ),
+                        ),
+                      ),
+                    ),
                     Padding(
                       padding: const EdgeInsets.only(top: 40.0),
                       child: Text(
@@ -350,22 +388,52 @@ class _RegisterState extends State<Register> {
                   ),
                   Padding(
                     padding: const EdgeInsets.only(top: 10.0),
-                    child: RichText(
-                      text: new TextSpan(
-                        children: [
-                          new TextSpan(
-                            text: 'Already have an account? ',
-                            style: new TextStyle(color: Colors.black),
+                    child:
+                        // Text Sign up
+                        Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        //sign up text
+                        TextButton(
+                          style: TextButton.styleFrom(
+                            textStyle: const TextStyle(fontSize: 20),
                           ),
-                          new TextSpan(
-                            text: 'Log In',
-                            style: new TextStyle(color: Colors.blue),
-                            recognizer: new TapGestureRecognizer()
-                              ..onTap = () {},
+                          onPressed: () => _signUpButtonPress(context),
+                          child: const Text(
+                            "Sign In",
+                            style: TextStyle(
+                              color: Colors.blue,
+                              fontSize: 20,
+                              fontFamily: 'Averta',
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                        ],
-                      ),
+                        ),
+                        const Text(
+                          "to Start Explore",
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 20,
+                          ),
+                        ),
+                      ],
                     ),
+                    // RichText(
+                    //   text: new TextSpan(
+                    //     children: [
+                    //       new TextSpan(
+                    //         text: 'Already have an account? ',
+                    //         style: new TextStyle(color: Colors.black),
+                    //       ),
+                    //       new TextSpan(
+                    //         text: 'Log In',
+                    //         style: new TextStyle(color: Colors.blue),
+                    //         recognizer: new TapGestureRecognizer()
+                    //           ..onTap = () {},
+                    //       ),
+                    //     ],
+                    //   ),
+                    // ),
                   ),
                 ],
               ),

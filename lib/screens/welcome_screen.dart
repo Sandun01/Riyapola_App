@@ -1,9 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 
-import './home_screeen.dart';
-import './login_screen.dart';
-
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({Key? key}) : super(key: key);
 
@@ -19,23 +16,17 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
 
   void _skipBottonPress(BuildContext ctx) {
     print('Skip BottonPress');
-    Navigator.of(ctx).pushReplacement(
-      MaterialPageRoute(
-        builder: (_) {
-          return Home();
-        },
-      ),
+    Navigator.of(ctx).pushReplacementNamed(
+      '/home',
+      arguments: {},
     );
   }
 
   void _signUpButtonPress(BuildContext ctx) {
     print('Sign In BottonPress');
-    Navigator.of(ctx).pushReplacement(
-      MaterialPageRoute(
-        builder: (_) {
-          return Login();
-        },
-      ),
+    Navigator.of(ctx).pushReplacementNamed(
+      '/login',
+      arguments: {},
     );
   }
 
@@ -138,7 +129,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                       ),
                       onPressed: () => _signUpButtonPress(context),
                       child: const Text(
-                        "Sign Up",
+                        "Sign In",
                         style: TextStyle(
                           color: Colors.blue,
                           fontSize: 20,

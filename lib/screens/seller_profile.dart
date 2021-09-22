@@ -11,116 +11,135 @@ class _SellerProfileState extends State<SellerProfile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: SingleChildScrollView(
-      child: Column(
-        children: [
-          CustomPaint(
-            size: Size(MediaQuery.of(context).size.width,
-                MediaQuery.of(context).size.height.toDouble()),
-            painter: RPSCustomPainter(),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Container(
-                  width: MediaQuery.of(context).size.width,
-                  height: 200,
-                  child: ListTile(
-                    contentPadding: EdgeInsets.all(30.0),
-                    leading: Icon(Icons.account_circle_outlined,
-                        color: Colors.white, size: 50.0),
-                    subtitle: Text(
-                      'Aydoya Ratnayake',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 30,
-                      ),
-                    ),
-                    title: Text(
-                      'seller profile',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
-                      ),
-                    ),
-                  ),
+        appBar: AppBar(
+          backgroundColor: Theme.of(context).colorScheme.primary,
+          elevation: 0,
+          title: const Center(
+            child: Padding(
+              padding: EdgeInsets.only(
+                top: 20.0,
+                bottom: 20.0,
+              ),
+              child: Text(
+                "RiyaPola",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 40,
                 ),
-                const SizedBox(
-                  width: double.infinity,
-                  height: 110.0,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                  child: TextFormField(
-                    readOnly: true,
-                    initialValue: "Ayodya",
-                    decoration: const InputDecoration(
-                      icon: const Icon(Icons.person_outline_outlined,
-                          color: Colors.black),
-                      hintStyle: TextStyle(
-                        color: Colors.black,
-                      ),
-                      labelText: "Full Name",
-                      labelStyle: TextStyle(
-                        color: Colors.black,
-                      ),
-                    ),
-                    style: TextStyle(
-                      color: Colors.black,
-                    ),
-                    onSaved: (value) {},
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                  child: TextFormField(
-                    readOnly: true,
-                    initialValue: "0123456789",
-                    decoration: const InputDecoration(
-                      icon: const Icon(Icons.mobile_friendly_outlined,
-                          color: Colors.black),
-                      hintStyle: TextStyle(
-                        color: Colors.black,
-                      ),
-                      labelText: "Mobile Number",
-                      labelStyle: TextStyle(
-                        color: Colors.black,
-                      ),
-                    ),
-                    style: TextStyle(
-                      color: Colors.black,
-                    ),
-                    onSaved: (value) {},
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                  child: TextFormField(
-                    readOnly: true,
-                    initialValue: "blablabla@blabla.blabla",
-                    decoration: const InputDecoration(
-                      icon:
-                          const Icon(Icons.email_outlined, color: Colors.black),
-                      hintStyle: TextStyle(
-                        color: Colors.black,
-                      ),
-                      labelText: "Email",
-                      labelStyle: TextStyle(
-                        color: Colors.black,
-                      ),
-                    ),
-                    style: TextStyle(
-                      color: Colors.black,
-                    ),
-                    onSaved: (value) {},
-                  ),
-                ),
-              ],
+              ),
             ),
-          )
-        ],
-      ),
-    ));
+          ),
+        ),
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              CustomPaint(
+                size: Size(MediaQuery.of(context).size.width,
+                    MediaQuery.of(context).size.height.toDouble()),
+                painter: RPSCustomPainter(),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Container(
+                      width: MediaQuery.of(context).size.width,
+                      height: 200,
+                      child: ListTile(
+                        contentPadding: EdgeInsets.all(30.0),
+                        leading: Icon(Icons.account_circle_outlined,
+                            color: Colors.white, size: 50.0),
+                        subtitle: Text(
+                          'Aydoya Ratnayake',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 30,
+                          ),
+                        ),
+                        title: Text(
+                          'seller profile',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 20,
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      width: double.infinity,
+                      height: 110.0,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                      child: TextFormField(
+                        readOnly: true,
+                        initialValue: "Ayodya",
+                        decoration: const InputDecoration(
+                          icon: const Icon(Icons.person_outline_outlined,
+                              color: Colors.black),
+                          hintStyle: TextStyle(
+                            color: Colors.black,
+                          ),
+                          labelText: "Full Name",
+                          labelStyle: TextStyle(
+                            color: Colors.black,
+                          ),
+                        ),
+                        style: TextStyle(
+                          color: Colors.black,
+                        ),
+                        onSaved: (value) {},
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                      child: TextFormField(
+                        readOnly: true,
+                        initialValue: "0123456789",
+                        decoration: const InputDecoration(
+                          icon: const Icon(Icons.mobile_friendly_outlined,
+                              color: Colors.black),
+                          hintStyle: TextStyle(
+                            color: Colors.black,
+                          ),
+                          labelText: "Mobile Number",
+                          labelStyle: TextStyle(
+                            color: Colors.black,
+                          ),
+                        ),
+                        style: TextStyle(
+                          color: Colors.black,
+                        ),
+                        onSaved: (value) {},
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                      child: TextFormField(
+                        readOnly: true,
+                        initialValue: "blablabla@blabla.blabla",
+                        decoration: const InputDecoration(
+                          icon: const Icon(Icons.email_outlined,
+                              color: Colors.black),
+                          hintStyle: TextStyle(
+                            color: Colors.black,
+                          ),
+                          labelText: "Email",
+                          labelStyle: TextStyle(
+                            color: Colors.black,
+                          ),
+                        ),
+                        style: TextStyle(
+                          color: Colors.black,
+                        ),
+                        onSaved: (value) {},
+                      ),
+                    ),
+                  ],
+                ),
+              )
+            ],
+          ),
+        ));
   }
 }
 
