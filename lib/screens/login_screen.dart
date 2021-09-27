@@ -1,6 +1,10 @@
 import 'dart:async';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:riyapola_app/screens/home_screeen.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -10,11 +14,20 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  FirebaseAuth _auth = FirebaseAuth.instance;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
   late String _username;
+  late String _password;
   late bool _passwordVisible = true;
+
   void initState() {
     _passwordVisible = false;
+    Firebase.initializeApp().whenComplete(() {
+      print("completed");
+      setState(() {});
+    });
+    this.checkAuthentication();
   }
 
   void _RegisterButtonPress(BuildContext ctx) {
@@ -30,6 +43,57 @@ class _LoginState extends State<Login> {
     Navigator.of(ctx).pushReplacementNamed(
       '/home',
       arguments: {},
+    );
+  }
+
+  checkAuthentication() async{
+    FirebaseAuth.instance.authStateChanges().listen((firebaseUser) {
+      if(firebaseUser != null){
+        Navigator.push(context, MaterialPageRoute(builder: (context)=>
+          Home()));
+      }
+    });
+  }
+
+  // signUp() async {
+  //   if (_formKey.currentState.validate()) {
+  //     _formKey.currentState.save();
+  //
+  //     try {
+  //       UserCredential user = await _auth.createUserWithEmailAndPassword(
+  //           email: _username, password: _password);
+  //       if (user != null) {
+  //         // UserUpdateInfo updateuser = UserUpdateInfo();
+  //         // updateuser.displayName = _name;
+  //         //  user.updateProfile(updateuser);
+  //         await _auth.currentUser.updateProfile(displayName: _name);
+  //         // await Navigator.pushReplacementNamed(context,"/") ;
+  //
+  //       }
+  //     } catch (e) {
+  //       showError(e.message);
+  //       print(e);
+  //     }
+  //   }
+  // }
+
+
+  showError(String errormessage) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('ERROR'),
+            content: Text(errormessage),
+            actions: <Widget>[
+              FlatButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text('OK'))
+            ],
+          );
+        }
     );
   }
 
@@ -263,7 +327,9 @@ class _LoginState extends State<Login> {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        onPressed: () {},
+                        onPressed: () {
+                          FirebaseFirestore.instance.collection('user').snapshots().listen((data) {print(data);});
+                        },
                         style: ElevatedButton.styleFrom(
                           shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(30.0)),

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "809250291493",
+    "project_id": "riyapola-app",
+    "storage_bucket": "riyapola-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:809250291493:android:e86123b1c118d77deee4cc",
+        "android_client_info": {
+          "package_name": "com.example.riyapola_app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "809250291493-hnp4tqd7qvrji99l6ak6vuvidmi8q418.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDbHDnIoJSKQl2AdAHj4yYoVgkPQuH__fc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "809250291493-hnp4tqd7qvrji99l6ak6vuvidmi8q418.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
