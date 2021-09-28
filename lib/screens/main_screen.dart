@@ -4,6 +4,7 @@ import 'home_screeen.dart';
 import 'category_screen.dart';
 import 'chatList.dart';
 import 'user_profile_screen.dart';
+import 'chatnotifacations.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -26,7 +27,7 @@ class _MainScreenState extends State<MainScreen> {
   List<Widget> _widgetOptions = <Widget>[
     Home(),
     CategoryScreen(),
-    CategoryScreen(), //notications
+    my_notications(), //notications
     my_chats(),
     Profile(),
   ];
