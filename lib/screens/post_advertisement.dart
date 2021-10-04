@@ -1,6 +1,11 @@
 import 'dart:async';
+import 'dart:convert';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import '../widgets/buttons/image_input.dart';
+import '../models/advertisement.dart';
+import 'package:http/http.dart' as http;
+import 'package:firebase_storage/firebase_storage.dart';
 
 class PostAdvertisement extends StatefulWidget {
   const PostAdvertisement({Key? key}) : super(key: key);
@@ -11,7 +16,101 @@ class PostAdvertisement extends StatefulWidget {
 
 class _PostAdvertisementState extends State<PostAdvertisement> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  late String _addTitle;
+
+  late File? _userImafeFile = null;
+
+  var _postAdData = Advertisement(
+    id: '',
+    title: '',
+    price: 0,
+    category: '',
+    desccription: '',
+    location: '',
+    imageUrl: '',
+    user: '',
+  );
+
+  void _pickedImage(File image) {
+    _userImafeFile = image;
+  }
+
+  void _saveFormData() {
+    final isValid = _formKey.currentState!.validate();
+
+    if (!isValid) {
+      return;
+    }
+
+    // if (_userImafeFile == null) {
+    //   final snackBar = SnackBar(
+    //     content: const Text('Please pick an image.'),
+    //     backgroundColor: Theme.of(context).errorColor,
+    //     action: SnackBarAction(
+    //       label: '',
+    //       onPressed: () {
+    //         // Some code to undo the change.
+    //       },
+    //     ),
+    //   );
+    //   ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    //   return;
+    // }
+
+    _formKey.currentState!.save();
+
+    // print(_postAdData.title);
+    // print(_postAdData.price);
+    // print(_postAdData.category);
+    // print(_postAdData.desccription);
+    // print(_postAdData.location);
+    // print(_postAdData.imageUrl);
+
+    //upload image
+    // _upload_image_firebase();
+
+    //upload data
+    handle_submit_data(_postAdData);
+  }
+
+  //upload image to firebase
+  void _upload_image_firebase() {
+    final ref = FirebaseStorage.instance.ref().child('advertisement_images');
+
+    ref.putFile(_userImafeFile!);
+  }
+
+  //add data to database
+  void handle_submit_data(_postAdData) {
+    const url =
+        "https://riyapola-app-default-rtdb.firebaseio.com/advertisements.json";
+    http
+        .post(Uri.parse(url),
+            body: json.encode({
+              "title": _postAdData.title,
+              "price": _postAdData.price,
+              "category": _postAdData.category,
+              "desccription": _postAdData.desccription,
+              "location": _postAdData.location,
+              "imageUrl": _postAdData.imageUrl,
+              "user": _postAdData.user,
+            }))
+        .then(
+      (res) {
+        //show snack bar
+        final snackBar = SnackBar(
+          content: const Text('Advertisement added successfully!'),
+          action: SnackBarAction(
+            label: 'Ok',
+            onPressed: () {
+              // Some code to undo the change.
+              Navigator.pop(context);
+            },
+          ),
+        );
+        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -77,11 +176,11 @@ class _PostAdvertisementState extends State<PostAdvertisement> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             //image
-                            const Padding(
+                            Padding(
                               padding: EdgeInsets.only(
                                 top: 20,
                               ),
-                              child: ImageInput(),
+                              child: ImageInput(_pickedImage),
                             ),
 
                             //title
@@ -116,7 +215,7 @@ class _PostAdvertisementState extends State<PostAdvertisement> {
                                   ),
                                 ),
                                 validator: (value) {
-                                  if (value == null) {
+                                  if (value!.isEmpty) {
                                     return 'Title cannot be empty';
                                   }
                                   return null;
@@ -125,7 +224,14 @@ class _PostAdvertisementState extends State<PostAdvertisement> {
                                   color: Colors.white,
                                 ),
                                 onSaved: (value) {
-                                  _addTitle = value.toString();
+                                  _postAdData = Advertisement(
+                                    id: '',
+                                    title: value.toString(),
+                                    desccription: _postAdData.desccription,
+                                    price: _postAdData.price,
+                                    category: _postAdData.category,
+                                    location: _postAdData.location,
+                                  );
                                 },
                               ),
                             ),
@@ -163,7 +269,7 @@ class _PostAdvertisementState extends State<PostAdvertisement> {
                                       ),
                                     ),
                                     validator: (value) {
-                                      if (value == null) {
+                                      if (value!.isEmpty) {
                                         return 'Category cannot be empty';
                                       }
                                       return null;
@@ -172,7 +278,14 @@ class _PostAdvertisementState extends State<PostAdvertisement> {
                                       color: Colors.white,
                                     ),
                                     onSaved: (value) {
-                                      _addTitle = value.toString();
+                                      _postAdData = Advertisement(
+                                        id: '',
+                                        title: _postAdData.title,
+                                        desccription: _postAdData.desccription,
+                                        price: _postAdData.price,
+                                        category: value.toString(),
+                                        location: _postAdData.location,
+                                      );
                                     },
                                   ),
                                 ),
@@ -205,17 +318,30 @@ class _PostAdvertisementState extends State<PostAdvertisement> {
                                             BorderSide(color: Colors.white),
                                       ),
                                     ),
-                                    // validator: (value) {
-                                    //   if (value == null) {
-                                    //     return 'Price cannot be empty';
-                                    //   }
-                                    //   return null;
-                                    // },
+                                    validator: (value) {
+                                      if (value!.isEmpty) {
+                                        return 'Price cannot be empty';
+                                      }
+                                      if (double.tryParse(value) == null) {
+                                        return 'Please enter valid price';
+                                      }
+                                      if (double.parse(value) < 0) {
+                                        return 'Please enter valid price';
+                                      }
+                                      return null;
+                                    },
                                     style: const TextStyle(
                                       color: Colors.white,
                                     ),
                                     onSaved: (value) {
-                                      _addTitle = value.toString();
+                                      _postAdData = Advertisement(
+                                        id: '',
+                                        title: _postAdData.title,
+                                        desccription: _postAdData.desccription,
+                                        price: double.parse(value.toString()),
+                                        category: _postAdData.category,
+                                        location: _postAdData.location,
+                                      );
                                     },
                                   ),
                                 ),
@@ -258,7 +384,7 @@ class _PostAdvertisementState extends State<PostAdvertisement> {
                                   fillColor: Colors.white30,
                                 ),
                                 validator: (value) {
-                                  if (value == null) {
+                                  if (value!.isEmpty) {
                                     return 'Description cannot be empty';
                                   }
                                   return null;
@@ -267,7 +393,14 @@ class _PostAdvertisementState extends State<PostAdvertisement> {
                                   color: Colors.white,
                                 ),
                                 onSaved: (value) {
-                                  _addTitle = value.toString();
+                                  _postAdData = Advertisement(
+                                    id: '',
+                                    title: _postAdData.title,
+                                    desccription: value.toString(),
+                                    price: _postAdData.price,
+                                    category: _postAdData.category,
+                                    location: _postAdData.location,
+                                  );
                                 },
                               ),
                             ),
@@ -304,7 +437,7 @@ class _PostAdvertisementState extends State<PostAdvertisement> {
                                   ),
                                 ),
                                 validator: (value) {
-                                  if (value == null) {
+                                  if (value!.isEmpty) {
                                     return 'Description cannot be empty';
                                   }
                                   return null;
@@ -313,7 +446,14 @@ class _PostAdvertisementState extends State<PostAdvertisement> {
                                   color: Colors.white,
                                 ),
                                 onSaved: (value) {
-                                  _addTitle = value.toString();
+                                  _postAdData = Advertisement(
+                                    id: '',
+                                    title: _postAdData.title,
+                                    desccription: _postAdData.desccription,
+                                    price: _postAdData.price,
+                                    category: _postAdData.category,
+                                    location: value.toString(),
+                                  );
                                 },
                               ),
                             ),
@@ -341,13 +481,7 @@ class _PostAdvertisementState extends State<PostAdvertisement> {
                                       ),
                                     ),
                                   ),
-                                  onPressed: () {
-                                    // Validate will return true if the form is valid, or false if
-                                    // the form is invalid.
-                                    if (_formKey.currentState!.validate()) {
-                                      // Process data.
-                                    }
-                                  },
+                                  onPressed: _saveFormData,
                                   child: const Text(
                                     'POST',
                                     style: TextStyle(color: Colors.white),
