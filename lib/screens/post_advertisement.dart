@@ -1,9 +1,11 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import '../widgets/buttons/image_input.dart';
 import '../models/advertisement.dart';
 import 'package:http/http.dart' as http;
+import 'package:firebase_storage/firebase_storage.dart';
 
 class PostAdvertisement extends StatefulWidget {
   const PostAdvertisement({Key? key}) : super(key: key);
@@ -14,6 +16,8 @@ class PostAdvertisement extends StatefulWidget {
 
 class _PostAdvertisementState extends State<PostAdvertisement> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  late File? _userImafeFile = null;
 
   var _postAdData = Advertisement(
     id: '',
@@ -26,12 +30,31 @@ class _PostAdvertisementState extends State<PostAdvertisement> {
     user: '',
   );
 
+  void _pickedImage(File image) {
+    _userImafeFile = image;
+  }
+
   void _saveFormData() {
     final isValid = _formKey.currentState!.validate();
 
     if (!isValid) {
       return;
     }
+
+    // if (_userImafeFile == null) {
+    //   final snackBar = SnackBar(
+    //     content: const Text('Please pick an image.'),
+    //     backgroundColor: Theme.of(context).errorColor,
+    //     action: SnackBarAction(
+    //       label: '',
+    //       onPressed: () {
+    //         // Some code to undo the change.
+    //       },
+    //     ),
+    //   );
+    //   ScaffoldMessenger.of(context).showSnackBar(snackBar);
+    //   return;
+    // }
 
     _formKey.currentState!.save();
 
@@ -42,7 +65,18 @@ class _PostAdvertisementState extends State<PostAdvertisement> {
     // print(_postAdData.location);
     // print(_postAdData.imageUrl);
 
+    //upload image
+    // _upload_image_firebase();
+
+    //upload data
     handle_submit_data(_postAdData);
+  }
+
+  //upload image to firebase
+  void _upload_image_firebase() {
+    final ref = FirebaseStorage.instance.ref().child('advertisement_images');
+
+    ref.putFile(_userImafeFile!);
   }
 
   //add data to database
@@ -142,11 +176,11 @@ class _PostAdvertisementState extends State<PostAdvertisement> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             //image
-                            const Padding(
+                            Padding(
                               padding: EdgeInsets.only(
                                 top: 20,
                               ),
-                              child: ImageInput(),
+                              child: ImageInput(_pickedImage),
                             ),
 
                             //title

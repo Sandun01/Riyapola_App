@@ -35,10 +35,10 @@ void main() {
       debugShowCheckedModeBanner: false,
 
       //-----main
-      // home: SplashScreen(),
+      home: SplashScreen(),
 
       //-----testing
-      home: PostAdvertisement(),
+      // home: PostAdvertisement(),
       // home: MyAdvertisements(),
       // home: my_notications(),
       // home: SellerProfile(),
