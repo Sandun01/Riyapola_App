@@ -1,7 +1,11 @@
 import 'dart:async';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:riyapola_app/services/auth_services.dart';
+import 'package:provider/provider.dart';
 
 class Register extends StatefulWidget {
   const Register({Key? key}) : super(key: key);
@@ -11,8 +15,11 @@ class Register extends StatefulWidget {
 }
 
 class _RegisterState extends State<Register> {
+  TextEditingController emailController = new TextEditingController();
+  TextEditingController passwordController = new TextEditingController();
+  TextEditingController nameController = new TextEditingController();
+  TextEditingController mobileController = new TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  late String _username;
   late bool _passwordVisible = true;
   void initState() {
     _passwordVisible = false;
@@ -73,7 +80,7 @@ class _RegisterState extends State<Register> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(top: 40.0),
+                      padding: const EdgeInsets.only(top: 10.0),
                       child: Text(
                         "Riyapola",
                         style: TextStyle(
@@ -84,7 +91,7 @@ class _RegisterState extends State<Register> {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(
-                          left: 40.0, top: 30.0, right: 20.0, bottom: 0.0),
+                          left: 40.0, top: 40.0, right: 20.0, bottom: 0.0),
                       child: Row(
                         children: [
                           Text(
@@ -115,8 +122,9 @@ class _RegisterState extends State<Register> {
                           children: <Widget>[
                             Padding(
                               padding: const EdgeInsets.symmetric(
-                                  horizontal: 20.0, vertical: 15.0),
+                                  horizontal: 20.0, vertical: 10.0),
                               child: TextFormField(
+                                controller: nameController,
                                 decoration: const InputDecoration(
                                   icon: const Icon(Icons.person,
                                       color: Colors.white),
@@ -147,15 +155,13 @@ class _RegisterState extends State<Register> {
                                 style: TextStyle(
                                   color: Colors.white,
                                 ),
-                                onSaved: (value) {
-                                  _username = value.toString();
-                                },
                               ),
                             ),
                             Padding(
                               padding: const EdgeInsets.symmetric(
-                                  horizontal: 20.0, vertical: 15.0),
+                                  horizontal: 20.0, vertical: 10.0),
                               child: TextFormField(
+                                controller: mobileController,
                                 decoration: const InputDecoration(
                                   icon: const Icon(Icons.mobile_friendly,
                                       color: Colors.white),
@@ -186,15 +192,13 @@ class _RegisterState extends State<Register> {
                                 style: TextStyle(
                                   color: Colors.white,
                                 ),
-                                onSaved: (value) {
-                                  _username = value.toString();
-                                },
                               ),
                             ),
                             Padding(
                               padding: const EdgeInsets.symmetric(
-                                  horizontal: 20.0, vertical: 15.0),
+                                  horizontal: 20.0, vertical: 10.0),
                               child: TextFormField(
+                                controller: emailController,
                                 decoration: const InputDecoration(
                                   icon: const Icon(Icons.email,
                                       color: Colors.white),
@@ -225,15 +229,13 @@ class _RegisterState extends State<Register> {
                                 style: TextStyle(
                                   color: Colors.white,
                                 ),
-                                onSaved: (value) {
-                                  _username = value.toString();
-                                },
                               ),
                             ),
                             Padding(
                               padding: const EdgeInsets.symmetric(
-                                  horizontal: 20.0, vertical: 15.0),
+                                  horizontal: 20.0, vertical: 10.0),
                               child: TextFormField(
+                                controller: passwordController,
                                 keyboardType: TextInputType.text,
                                 // controller: _userPasswordController,
                                 obscureText:
@@ -286,8 +288,9 @@ class _RegisterState extends State<Register> {
                             ),
                             Padding(
                               padding: const EdgeInsets.symmetric(
-                                  horizontal: 20.0, vertical: 15.0),
+                                  horizontal: 20.0, vertical: 10.0),
                               child: TextFormField(
+                                controller: passwordController,
                                 keyboardType: TextInputType.text,
                                 // controller: _userPasswordController,
                                 obscureText:
@@ -376,7 +379,36 @@ class _RegisterState extends State<Register> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        final String email = emailController.text.trim();
+                        final String password = passwordController.text.trim();
+                        final String name = nameController.text.toString();
+                        final String mobile = mobileController.text.trim();
+
+                        if(email.isEmpty){
+                          print("Email is Empty");
+                        } else {
+                          if(password.isEmpty){
+                            print("Password is Empty");
+                          } else {
+                            context.read<AuthService>().signUp(
+                              email,
+                              password,
+                              name,
+                              mobile
+                            ).then((value) async {
+                              User? user = FirebaseAuth.instance.currentUser;
+
+                              await FirebaseFirestore.instance.collection("users").doc(user!.uid).set({
+                                'uid': user.uid,
+                                'email': email,
+                                'name' : name,
+                                'mobile' : mobile,
+                              });
+                            });
+                          }
+                        }
+                      },
                       style: ElevatedButton.styleFrom(
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(30.0)),

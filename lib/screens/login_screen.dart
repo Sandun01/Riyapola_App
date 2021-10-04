@@ -5,6 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:riyapola_app/screens/home_screeen.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:provider/provider.dart';
+import 'package:riyapola_app/screens/user_profile_screen.dart';
+import 'package:riyapola_app/services/auth_services.dart';
+
+import 'main_screen.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -14,20 +20,13 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
-  FirebaseAuth _auth = FirebaseAuth.instance;
+  TextEditingController emailController = new TextEditingController();
+  TextEditingController passwordController = new TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-
-  late String _username;
-  late String _password;
   late bool _passwordVisible = true;
 
   void initState() {
     _passwordVisible = false;
-    Firebase.initializeApp().whenComplete(() {
-      print("completed");
-      setState(() {});
-    });
-    this.checkAuthentication();
   }
 
   void _RegisterButtonPress(BuildContext ctx) {
@@ -45,38 +44,6 @@ class _LoginState extends State<Login> {
       arguments: {},
     );
   }
-
-  checkAuthentication() async{
-    FirebaseAuth.instance.authStateChanges().listen((firebaseUser) {
-      if(firebaseUser != null){
-        Navigator.push(context, MaterialPageRoute(builder: (context)=>
-          Home()));
-      }
-    });
-  }
-
-  // signUp() async {
-  //   if (_formKey.currentState.validate()) {
-  //     _formKey.currentState.save();
-  //
-  //     try {
-  //       UserCredential user = await _auth.createUserWithEmailAndPassword(
-  //           email: _username, password: _password);
-  //       if (user != null) {
-  //         // UserUpdateInfo updateuser = UserUpdateInfo();
-  //         // updateuser.displayName = _name;
-  //         //  user.updateProfile(updateuser);
-  //         await _auth.currentUser.updateProfile(displayName: _name);
-  //         // await Navigator.pushReplacementNamed(context,"/") ;
-  //
-  //       }
-  //     } catch (e) {
-  //       showError(e.message);
-  //       print(e);
-  //     }
-  //   }
-  // }
-
 
   showError(String errormessage) {
     showDialog(
@@ -170,7 +137,7 @@ class _LoginState extends State<Login> {
                     ),
                     Padding(
                       padding: const EdgeInsets.only(
-                          left: 20.0, top: 100.0, right: 20.0, bottom: 0.0),
+                          left: 20.0, top: 60.0, right: 20.0, bottom: 0.0),
                       child: Form(
                         key: _formKey,
                         child: Column(
@@ -180,6 +147,7 @@ class _LoginState extends State<Login> {
                               padding: const EdgeInsets.symmetric(
                                   horizontal: 20.0, vertical: 30.0),
                               child: TextFormField(
+                                controller: emailController,
                                 decoration: const InputDecoration(
                                   icon: const Icon(Icons.person,
                                       color: Colors.white),
@@ -210,15 +178,13 @@ class _LoginState extends State<Login> {
                                 style: TextStyle(
                                   color: Colors.white,
                                 ),
-                                onSaved: (value) {
-                                  _username = value.toString();
-                                },
                               ),
                             ),
                             Padding(
                               padding:
                                   const EdgeInsets.symmetric(horizontal: 20.0),
                               child: TextFormField(
+                                controller: passwordController,
                                 keyboardType: TextInputType.text,
                                 // controller: _userPasswordController,
                                 obscureText:
@@ -282,40 +248,6 @@ class _LoginState extends State<Login> {
               child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    // Button(
-                    //   onPressed: null,
-                    //   child: Text('Button', style: TextStyle(
-                    //       color: Colors.blue
-                    //   )
-                    //   ),
-                    //   textColor: Colors.white,
-                    //   shape: RoundedRectangleBorder(side: BorderSide(
-                    //       color: Colors.blue,
-                    //       width: 1,
-                    //       style: BorderStyle.solid
-                    //   ), borderRadius: BorderRadius.circular(50)),
-                    // ),
-                    // Padding(
-                    // padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                    // child: ElevatedButton(
-                    //   child: Text(
-                    //     'Register',
-                    //     style: TextStyle(
-                    //       fontSize: 16.0,
-                    //       color: Colors.black,
-                    //       fontWeight: FontWeight.bold,
-                    //     ),
-                    //   ),
-                    //   onPressed: () => _RegisterButtonPress(context),
-                    //   style: ElevatedButton.styleFrom(
-                    //     shape: RoundedRectangleBorder(
-                    //         borderRadius: BorderRadius.circular(30.0)),
-                    //     primary: Colors.white,
-                    //     padding:
-                    //         EdgeInsets.symmetric(horizontal: 30, vertical: 12),
-                    //   ),
-                    // ),
-                    // ),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 10.0),
                       child: ElevatedButton(
@@ -328,7 +260,22 @@ class _LoginState extends State<Login> {
                           ),
                         ),
                         onPressed: () {
-                          FirebaseFirestore.instance.collection('user').snapshots().listen((data) {print(data);});
+                          final String email = emailController.text.trim();
+                          final String password = passwordController.text.trim();
+
+                          if(email.isEmpty){
+                            print("Email is Empty");
+                          } else {
+                            if(password.isEmpty){
+                              print("Password is Empty");
+                            } else {
+                              context.read<AuthService>().login(
+                                context,
+                                email,
+                                password,
+                              );
+                            }
+                          }
                         },
                         style: ElevatedButton.styleFrom(
                           shape: RoundedRectangleBorder(
