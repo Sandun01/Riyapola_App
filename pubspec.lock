@@ -254,8 +254,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.7.0"
-<<<<<<< HEAD
-=======
   nested:
     dependency: transitive
     description:
@@ -263,7 +261,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.0"
->>>>>>> 313e4aa569c5378499ed1fd85b75f8d3f11f0579
   path:
     dependency: transitive
     description:
@@ -291,7 +288,7 @@ packages:
       name: provider
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "6.0.1"
+    version: "4.3.3"
   sky_engine:
     dependency: transitive
     description: flutter

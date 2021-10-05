@@ -221,8 +221,8 @@ class _RegisterState extends State<Register> {
                                   ),
                                 ),
                                 validator: (value) {
-                                  if (value == null) {
-                                    return 'Usename cannot be empty';
+                                  if (value == null || !value.contains('@')) {
+                                    return 'Please enter a valid email address';
                                   }
                                   return null;
                                 },
@@ -385,25 +385,26 @@ class _RegisterState extends State<Register> {
                         final String name = nameController.text.toString();
                         final String mobile = mobileController.text.trim();
 
-                        if(email.isEmpty){
+                        if (email.isEmpty) {
                           print("Email is Empty");
                         } else {
-                          if(password.isEmpty){
+                          if (password.isEmpty) {
                             print("Password is Empty");
                           } else {
-                            context.read<AuthService>().signUp(
-                              email,
-                              password,
-                              name,
-                              mobile
-                            ).then((value) async {
+                            context
+                                .read<AuthService>()
+                                .signUp(email, password, name, mobile)
+                                .then((value) async {
                               User? user = FirebaseAuth.instance.currentUser;
 
-                              await FirebaseFirestore.instance.collection("users").doc(user!.uid).set({
+                              await FirebaseFirestore.instance
+                                  .collection("users")
+                                  .doc(user!.uid)
+                                  .set({
                                 'uid': user.uid,
                                 'email': email,
-                                'name' : name,
-                                'mobile' : mobile,
+                                'name': name,
+                                'mobile': mobile,
                               });
                             });
                           }
