@@ -80,26 +80,27 @@ class _ProfileState extends State<Profile> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(5),
-                          topRight: Radius.circular(5),
-                          bottomLeft: Radius.circular(5),
-                          bottomRight: Radius.circular(5)),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.5),
-                          spreadRadius: 2,
-                          blurRadius: 5,
-                          offset: Offset(0, 3), // changes position of shadow
-                        ),
-                      ],
-                    ),
-                    width: 75,
-                    height: 90,
-                    child: GestureDetector(
+                  GestureDetector(
+                    onTap: () => _onClickPostAdd(context),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(5),
+                            topRight: Radius.circular(5),
+                            bottomLeft: Radius.circular(5),
+                            bottomRight: Radius.circular(5)),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.5),
+                            spreadRadius: 2,
+                            blurRadius: 5,
+                            offset: Offset(0, 3), // changes position of shadow
+                          ),
+                        ],
+                      ),
+                      width: 75,
+                      height: 90,
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Column(
@@ -120,30 +121,29 @@ class _ProfileState extends State<Profile> {
                           ],
                         ),
                       ),
-                      onTap: () => _onClickPostAdd(context),
                     ),
                   ),
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(5),
-                          topRight: Radius.circular(5),
-                          bottomLeft: Radius.circular(5),
-                          bottomRight: Radius.circular(5)),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.5),
-                          spreadRadius: 2,
-                          blurRadius: 5,
-                          offset: Offset(0, 3), // changes position of shadow
-                        ),
-                      ],
-                    ),
-                    width: 75,
-                    height: 90,
-                    child: GestureDetector(
-                      onTap: () => _onClickMyAdds(context),
+                  GestureDetector(
+                    onTap: () => _onClickMyAdds(context),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(5),
+                            topRight: Radius.circular(5),
+                            bottomLeft: Radius.circular(5),
+                            bottomRight: Radius.circular(5)),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.5),
+                            spreadRadius: 2,
+                            blurRadius: 5,
+                            offset: Offset(0, 3), // changes position of shadow
+                          ),
+                        ],
+                      ),
+                      width: 75,
+                      height: 90,
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Column(
@@ -167,7 +167,7 @@ class _ProfileState extends State<Profile> {
                     ),
                   ),
                   GestureDetector(
-                    onTap: (){
+                    onTap: () {
                       print("Container clicked");
                     },
                     child: Container(
@@ -214,11 +214,10 @@ class _ProfileState extends State<Profile> {
                   GestureDetector(
                     onTap: () async {
                       await FirebaseAuth.instance.signOut();
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (_){
-                            return SplashScreen();
-                          }
-                      ));
+                      Navigator.of(context)
+                          .push(MaterialPageRoute(builder: (_) {
+                        return SplashScreen();
+                      }));
                     },
                     child: Container(
                       decoration: BoxDecoration(

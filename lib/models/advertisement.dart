@@ -1,17 +1,17 @@
 class Advertisement {
-  final String id;
-  final String title;
-  final double price;
-  final String category;
-  final String desccription;
-  final String location;
-  final String imageUrl;
-  final String user;
+  String id;
+  String title;
+  double price;
+  String category;
+  String description;
+  String location;
+  String imageUrl;
+  String user;
 
   Advertisement({
     required this.id,
     required this.title,
-    required this.desccription,
+    required this.description,
     required this.price,
     required this.category,
     required this.location,

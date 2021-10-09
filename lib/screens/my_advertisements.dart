@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:provider/provider.dart';
 import '../widgets//buttons/my_ads_button.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class MyAdvertisements extends StatefulWidget {
   const MyAdvertisements({Key? key}) : super(key: key);
@@ -10,6 +13,32 @@ class MyAdvertisements extends StatefulWidget {
 }
 
 class _MyAdvertisementsState extends State<MyAdvertisements> {
+  final FirebaseAuth auth = FirebaseAuth.instance;
+  late String userID;
+
+  void setUserId() {
+    final User? user = auth.currentUser;
+    final uid = user!.uid;
+    userID = uid;
+  }
+
+  // Future<Map> getAdsFromFirebase() async {
+
+  //   CollectionReference ads = _instance!.collection('ads');
+
+  //   DocumentSnapshot snapshot = await ads.doc().get();
+
+  //   var data = snapshot.data() as Map;
+
+  //   return data;
+  // }
+
+  @override
+  void initState() {
+    super.initState();
+    setUserId();
+  }
+
   void _onClickPostNewAddButton(BuildContext ctx) {
     print("post new add");
     Navigator.of(ctx).pushNamed(
@@ -76,23 +105,6 @@ class _MyAdvertisementsState extends State<MyAdvertisements> {
                         decorationThickness: 4),
                   ),
                 ),
-
-                // ElevatedButton.icon(
-                //   icon: const Icon(
-                //     Icons.add_circle,
-                //   ),
-                //   label: const Text("Post New Advertisement"),
-                //   style: ButtonStyle(
-                //     backgroundColor: MaterialStateColor.resolveWith(
-                //         (states) => Theme.of(context).colorScheme.primary),
-                //     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                //       RoundedRectangleBorder(
-                //         borderRadius: BorderRadius.circular(20.0),
-                //       ),
-                //     ),
-                //   ),
-                //   onPressed: () => _onClickPostNewAddButton(context),
-                // ),
               ),
 
               //list view
@@ -100,21 +112,60 @@ class _MyAdvertisementsState extends State<MyAdvertisements> {
                 width: double.infinity,
                 alignment: Alignment.center,
                 // color: Colors.amber,
-                child: Column(
-                  children: [
-                    MyAdsButton(),
-                    MyAdsButton(),
-                    MyAdsButton(),
-                    MyAdsButton(),
-                    MyAdsButton(),
-                    MyAdsButton(),
-                  ],
+                child: StreamBuilder(
+                  stream:
+                      FirebaseFirestore.instance.collection('ads').snapshots(),
+                  builder: (BuildContext context,
+                      AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>>
+                          snapshot) {
+                    if (!snapshot.hasData) {
+                      return Text('Loading data ... Please Wait ...');
+                    }
+                    if (snapshot.hasError) {
+                      return Text('Something went wrong');
+                    }
+                    return Column(
+                      children:
+                          snapshot.data!.docs.map((DocumentSnapshot document) {
+                        Map<String, dynamic> data =
+                            document.data()! as Map<String, dynamic>;
+                        return MyAdsButton(
+                          id: document.reference.toString(),
+                          addTitle: data['title'],
+                          description: data['description'],
+                          addImage: data['imageUrl'],
+                        );
+                      }).toList(),
+                    );
+                  },
                 ),
               ),
             ],
           ),
         ),
       ),
+      // body:
+      // StreamBuilder(
+      //   stream: FirebaseFirestore.instance.collection('ads').snapshots(),
+      //   builder: (BuildContext context,
+      //       AsyncSnapshot<QuerySnapshot<Map<String, dynamic>>> snapshot) {
+      //     if (!snapshot.hasData) {
+      //       return Text('Loading data ... Please Wait ...');
+      //     }
+      //     if (snapshot.hasError) {
+      //       return Text('Something went wrong');
+      //     }
+      //     return ListView(
+      //       children: snapshot.data!.docs.map((DocumentSnapshot document) {
+      //         Map<String, dynamic> data =
+      //             document.data()! as Map<String, dynamic>;
+      //         return ListTile(
+      //           title: Text(data['category']),
+      //         );
+      //       }).toList(),
+      //     );
+      //   },
+      // ),
       floatingActionButton: FloatingActionButton(
         onPressed: () => _onClickPostNewAddButton(context),
         tooltip: 'New Advertisement',
