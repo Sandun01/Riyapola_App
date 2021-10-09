@@ -17,7 +17,7 @@ class _ViewAdvertisementState extends State<ViewAdvertisement> {
   String _description =
       "Safety is the most important part of the overall Model 3 design. The metal structure is a combination of aluminum and steel, for maximum strength in every area. In a roof-crush test, Model 3 resisted four times its own mass, even with an all-glass roof: that's the same weight as two full-grown African elephants.";
   String _seller = "Nilan Meegoda";
-  String _ratingVal = "5.0";
+  String _ratingVal = "3.5";
 
   void _onclickViewSellerProfile(BuildContext ctx) {
     print("_onclickViewSellerProfile");
@@ -314,20 +314,20 @@ class _ViewAdvertisementState extends State<ViewAdvertisement> {
                         right: 20.0,
                       ),
                       // color: Colors.amber,
-                      child: RatingBar.builder(
-                        initialRating: double.parse(_ratingVal),
-                        minRating: 1,
+                      child: RatingBarIndicator(
+                        
+                        rating: double.parse(_ratingVal),
+                        
                         direction: Axis.horizontal,
-                        allowHalfRating: true,
+                        
                         itemCount: 5,
                         itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
                         itemBuilder: (context, _) => const Icon(
                           Icons.star,
                           color: Colors.amber,
                         ),
-                        onRatingUpdate: (rating) {
-                          print(rating);
-                        },
+                     
+                        
                       ),
                     ),
                     //..
