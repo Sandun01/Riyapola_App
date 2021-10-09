@@ -9,6 +9,7 @@ class ViewAdvertisement extends StatefulWidget {
 }
 
 class _ViewAdvertisementState extends State<ViewAdvertisement> {
+
   // String _title = "Tesla - Model 3";
   String _category = "Vehicle";
   String _location = "Colombo";
@@ -34,8 +35,21 @@ class _ViewAdvertisementState extends State<ViewAdvertisement> {
     );
   }
 
-  void _onclickAddFeedback(BuildContext ctx) {
+  void _onclickAddFeedback(BuildContext ctx,String _id,String _title,String _price) {
+    
     print("_onclickAddFeedback");
+    Navigator.of(ctx).pushNamed(
+      '/add-feedback-view',
+      arguments: {
+        'id': _id,
+        'title': _title,
+        'price': _price,
+        'category': _category,
+        'location': _location,
+        'seller':_seller,
+        
+      },
+    );
   }
 
   //build
@@ -46,6 +60,7 @@ class _ViewAdvertisementState extends State<ViewAdvertisement> {
 
     final _title = routeArgs['title'];
     final _price = routeArgs['price'];
+    final _id = routeArgs['id'];
 
     return Scaffold(
         appBar: AppBar(
@@ -300,7 +315,7 @@ class _ViewAdvertisementState extends State<ViewAdvertisement> {
                       ),
                       // color: Colors.amber,
                       child: RatingBar.builder(
-                        initialRating: 3,
+                        initialRating: double.parse(_ratingVal),
                         minRating: 1,
                         direction: Axis.horizontal,
                         allowHalfRating: true,
@@ -451,7 +466,7 @@ class _ViewAdvertisementState extends State<ViewAdvertisement> {
                           bottom: 10.0,
                         ),
                         child: ElevatedButton(
-                          onPressed: () => _onclickAddFeedback(context),
+                          onPressed: () => _onclickAddFeedback(context,_id!,_title,_price),
                           child: const Text(
                             "Write Feedback",
                             style: TextStyle(
