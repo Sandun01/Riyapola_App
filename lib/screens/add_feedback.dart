@@ -1,5 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import "package:flutter/material.dart";
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:riyapola_app/widgets/feedbackDialog/custom_dialogbox.dart';
+
 
 class AddFeedback extends StatefulWidget {
   const AddFeedback({Key? key}) : super(key: key);
@@ -9,18 +13,71 @@ class AddFeedback extends StatefulWidget {
 }
 
 class _AddFeedbackState extends State<AddFeedback> {
-  //build
   @override
   Widget build(BuildContext context) {
     final routeArgs =
         ModalRoute.of(context)!.settings.arguments as Map<String, String>;
-    String defaultRat = "2.5";
+
+    //retrive UID
+    final FirebaseAuth auth = FirebaseAuth.instance;
+    final User? user = auth.currentUser;
+    final _uid = user!.uid;
+
     final _title = routeArgs['title'];
     final _price = routeArgs['price'];
     final _id = routeArgs['id'];
     final _category = routeArgs['category'];
     final _location = routeArgs['location'];
     final _seller = routeArgs['seller'];
+    
+    final _productID = "prod1";//todo
+
+    String defaultRat = "2.5";
+    String? _feedback;
+    double _rating = 2.5;
+
+    final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+    validator() {
+      if (_formKey.currentState != null && _formKey.currentState!.validate()) {
+        print("validated");
+        _formKey.currentState!.save();
+        print(_feedback);
+        print(_rating);
+
+        CollectionReference Feedbacks =
+            FirebaseFirestore.instance.collection('feedbacks');
+
+
+
+        Feedbacks.add({
+          'uid': _uid,
+          'feedback': _feedback,
+          'rating': _rating,
+          'productID': _productID,
+        }).then(
+          (value) {
+            print("Feedbacks Added");
+
+
+            
+
+
+            //show final diaolg
+            showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return const CustomDialogBox(
+                    title: "Success!",
+                    descriptions: "Your Feedback Posted Successfully!",
+                    text: "OK",
+                  );
+                });
+          },
+        ).catchError((error) => print("Failed to add feedbacks: $error"));
+      } else
+        print("not validated");
+    }
 
     return Scaffold(
         appBar: AppBar(
@@ -66,7 +123,7 @@ class _AddFeedbackState extends State<AddFeedback> {
                       left: 30.0,
                     ),
                     child: Text(
-                      "Feedback"!,
+                      "Feedback",
                       style: const TextStyle(
                         // fontWeight: FontWeight.bold,
                         fontSize: 40,
@@ -259,7 +316,7 @@ class _AddFeedbackState extends State<AddFeedback> {
                     // color: Colors.amber,
                     child: RatingBar.builder(
                       initialRating: double.parse(defaultRat),
-                      minRating: 0,
+                      minRating: 1,
                       direction: Axis.horizontal,
                       allowHalfRating: true,
                       itemCount: 5,
@@ -269,7 +326,7 @@ class _AddFeedbackState extends State<AddFeedback> {
                         color: Colors.amber,
                       ),
                       onRatingUpdate: (rating) {
-                        print(rating);
+                        _rating = rating;
                       },
                     ),
                   ),
@@ -301,40 +358,66 @@ class _AddFeedbackState extends State<AddFeedback> {
                   //.
                   //feedback form
                   Container(
-                      /*************************
-                     * TO DO
-                     * *********************/
-
+                    margin: EdgeInsets.all(24),
+                    child: Form(
+                      key: _formKey,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          //.
+                          //.
+                          //feedback form Field
+                          TextFormField(
+                            decoration:
+                                InputDecoration(labelText: "Your Feedback"),
+                            validator: (String? value) {
+                              if (value == null || value.trim().length == 0) {
+                                return "Feedback is required";
+                              }
+                              return null;
+                            },
+                            onSaved: (value) => {_feedback = value},
+                            onChanged: (value) {
+                              // _feedback = value;
+                            },
+                          ),
+                          const SizedBox(
+                            width: double.infinity,
+                            height: 20.0,
+                          ),
+                          // .
+                          // .
+                          // submit button
+                          ElevatedButton.icon(
+                            icon: const Icon(
+                              Icons.send,
+                            ),
+                            label: Text("Submit"),
+                            style: ButtonStyle(
+                              backgroundColor: MaterialStateColor.resolveWith(
+                                (states) => Colors.black,
+                              ),
+                              textStyle: MaterialStateProperty.resolveWith(
+                                (states) => const TextStyle(
+                                  // fontSize: 20.0,
+                                  fontWeight: FontWeight.bold,
+                                  fontFamily: 'Averta',
+                                ),
+                              ),
+                              shape: MaterialStateProperty.all<
+                                  RoundedRectangleBorder>(
+                                RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                ),
+                              ),
+                            ),
+                            onPressed: () {
+                              validator();
+                            },
+                          ),
+                        ],
                       ),
-                  // .
-                  // .
-                  // submit button
-                  ElevatedButton.icon(
-                    icon: const Icon(
-                      Icons.account_circle,
                     ),
-                    label: Text("Submit Feedback"),
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateColor.resolveWith(
-                        (states) => Colors.black,
-                      ),
-                      textStyle: MaterialStateProperty.resolveWith(
-                        (states) => const TextStyle(
-                          // fontSize: 20.0,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'Averta',
-                        ),
-                      ),
-                      shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                        RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                      ),
-                    ),
-                    onPressed: () => (context),
-                    /*************************
-                     * TO DO
-                     * *********************/
                   ),
                 ]))));
   }
