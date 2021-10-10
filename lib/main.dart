@@ -70,8 +70,6 @@ class MyApp extends StatelessWidget {
           '/home': (ctx) => MainScreen(),
           // '/home': (ctx) => Home(),
           '/view-add': (ctx) => ViewAdvertisement(),
-          '/view-my-add': (ctx) => ViewMyAdvertiseMent(),
-          '/edit-add': (ctx) => EditAdvertisement(),
           '/categories': (ctx) => CategoryScreen(),
 
           //notifications
@@ -83,9 +81,11 @@ class MyApp extends StatelessWidget {
 
           '/user-profile': (ctx) => Profile(),
 
-          //normal routes
+          //ads normal routes
           '/post-add': (ctx) => PostAdvertisement(),
-          '/my-ads': (ctx) => MyAdvertisements(),
+          '/my-ads': (ctx) => MyAdvertisements(), // all my ads
+          '/view-my-add': (ctx) => ViewMyAdvertiseMent(), //view my single ad
+          '/edit-add': (ctx) => EditAdvertisement(),
 
           '/login': (ctx) => Login(),
           '/register': (ctx) => Register(),

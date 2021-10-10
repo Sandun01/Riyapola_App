@@ -58,30 +58,6 @@ class _EditAdvertisementState extends State<EditAdvertisement> {
     _dropdownValue = val;
   }
 
-  Future<void> deleteAd() async {
-    await FirebaseFirestore.instance.collection('ads').doc(_id).delete().then(
-      (value) {
-        print("Advertisement Deleted");
-        //show final diaolg
-        // showDialog(
-        //     context: context,
-        //     builder: (BuildContext context) {
-        //       return CustomDialogBox(
-        //         title: "Success!",
-        //         descriptions: "Your Advertisement Deleted Successfully!",
-        //         text: "OK",
-        //         route: "/my-ads",
-        //       );
-        //     });
-        // Navigator.of(context).pop(MaterialPageRoute(builder: (_) {
-        //   return MyAdvertisements();
-        // }));
-      },
-    ).catchError((e) {
-      print(e);
-    });
-  }
-
   void showProgressDialog() {
     progressDialog.style(
       message: 'Uploading Data...',
@@ -136,57 +112,57 @@ class _EditAdvertisementState extends State<EditAdvertisement> {
   }
 
   ///
-  ///delete function
-  showAlertDialog(BuildContext context) {
-    // set up the buttons
-    Widget cancelButton = FlatButton(
-      child: Text("Cancel"),
-      onPressed: () {
-        Navigator.of(context).pushNamed(
-          '/view-my-add',
-          arguments: {
-            'id': _id,
-          },
-        );
-      },
-    );
-    Widget continueButton = FlatButton(
-      child: Text("Continue"),
-      onPressed: () async {
-        await FirebaseFirestore.instance
-            .collection('ads')
-            .doc(_id)
-            .delete()
-            .then(
-          (value) {
-            print("Advertisement Deleted");
-            Navigator.of(context).push(MaterialPageRoute(builder: (_) {
-              return MyAdvertisements();
-            }));
-          },
-        ).catchError((e) {
-          print(e);
-        });
-      },
-    );
-    // set up the AlertDialog
-    AlertDialog alert = AlertDialog(
-      title: Text("Alert !"),
-      content: Text("Would you like to continue deleting your account"),
-      actions: [
-        cancelButton,
-        continueButton,
-      ],
-    );
+  // ///delete function
+  // showAlertDialog(BuildContext context) {
+  //   // set up the buttons
+  //   Widget cancelButton = FlatButton(
+  //     child: const Text("Cancel"),
+  //     onPressed: () {
+  //       Navigator.of(context).pushNamed(
+  //         '/view-my-add',
+  //         arguments: {
+  //           'id': _id,
+  //         },
+  //       );
+  //     },
+  //   );
+  //   Widget continueButton = FlatButton(
+  //     child: const Text("Confirm"),
+  //     onPressed: () async {
+  //       await FirebaseFirestore.instance
+  //           .collection('ads')
+  //           .doc(_id)
+  //           .delete()
+  //           .then(
+  //         (value) {
+  //           print("Advertisement Deleted");
+  //           Navigator.of(context).pushNamed(
+  //             '/my-ads',
+  //           );
+  //         },
+  //       ).catchError((e) {
+  //         print(e);
+  //       });
+  //     },
+  //   );
+  //   // set up the AlertDialog
+  //   AlertDialog alert = AlertDialog(
+  //     title: const Text("Warning !"),
+  //     content: const Text("Do you want to Delete your Advertisement"),
+  //     actions: [
+  //       cancelButton,
+  //       continueButton,
+  //     ],
+  //   );
 
-    // show the dialog
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return alert;
-      },
-    );
-  }
+  //   // show the dialog
+  //   showDialog(
+  //     context: context,
+  //     builder: (BuildContext context) {
+  //       return alert;
+  //     },
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -586,6 +562,7 @@ class _EditAdvertisementState extends State<EditAdvertisement> {
                             );
                           }),
                     ),
+                    // delete_loading == false && ()
                   ),
                 ],
               ),
@@ -620,38 +597,39 @@ class _EditAdvertisementState extends State<EditAdvertisement> {
                         )),
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 10.0,
-                  ),
-                  child: ElevatedButton(
-                    child: const Text(
-                      'DELETE',
-                      style: TextStyle(
-                        color: Colors.red,
-                        // fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    onPressed: () {
-                      showAlertDialog(context);
-                    },
-                    style: ElevatedButton.styleFrom(
-                        shadowColor: Colors.red,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(30.0),
-                        ),
-                        primary: Colors.white,
-                        side: const BorderSide(
-                          color: Colors.red,
-                          width: 2,
-                        ),
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 30, vertical: 8),
-                        textStyle: const TextStyle(
-                          fontSize: 20,
-                        )),
-                  ),
-                ),
+                // Padding(
+                //   padding: const EdgeInsets.symmetric(
+                //     horizontal: 10.0,
+                //   ),
+                //   child: ElevatedButton(
+                //     child: const Text(
+                //       'DELETE',
+                //       style: TextStyle(
+                //         color: Colors.red,
+                //         // fontWeight: FontWeight.bold,
+                //       ),
+                //     ),
+                //     onPressed: () {
+                //       showAlertDialog(context);
+                //       // deleteAd();
+                //     },
+                //     style: ElevatedButton.styleFrom(
+                //         shadowColor: Colors.red,
+                //         shape: RoundedRectangleBorder(
+                //           borderRadius: BorderRadius.circular(30.0),
+                //         ),
+                //         primary: Colors.white,
+                //         side: const BorderSide(
+                //           color: Colors.red,
+                //           width: 2,
+                //         ),
+                //         padding: const EdgeInsets.symmetric(
+                //             horizontal: 30, vertical: 8),
+                //         textStyle: const TextStyle(
+                //           fontSize: 20,
+                //         )),
+                //   ),
+                // ),
               ],
             ),
           ),

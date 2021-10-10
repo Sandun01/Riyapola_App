@@ -45,6 +45,58 @@ class _ViewMyAdvertiseMentState extends State<ViewMyAdvertiseMent> {
     );
   }
 
+  ///delete function
+  showAlertDialog(BuildContext context) {
+    // set up the buttons
+    Widget cancelButton = FlatButton(
+      child: const Text("Cancel"),
+      onPressed: () {
+        Navigator.of(context).pushNamed(
+          '/view-my-add',
+          arguments: {
+            'id': _id,
+          },
+        );
+      },
+    );
+    Widget continueButton = FlatButton(
+      child: const Text("Confirm"),
+      onPressed: () async {
+        await FirebaseFirestore.instance
+            .collection('ads')
+            .doc(_id)
+            .delete()
+            .then(
+          (value) {
+            print("Advertisement Deleted");
+            Navigator.of(context).pushNamed(
+              '/my-ads',
+            );
+          },
+        ).catchError((e) {
+          print(e);
+        });
+      },
+    );
+    // set up the AlertDialog
+    AlertDialog alert = AlertDialog(
+      title: const Text("Warning !"),
+      content: const Text("Do you want to Delete your Advertisement"),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
   //build
   @override
   Widget build(BuildContext context) {
@@ -52,6 +104,7 @@ class _ViewMyAdvertiseMentState extends State<ViewMyAdvertiseMent> {
         ModalRoute.of(context)!.settings.arguments as Map<String, String>;
 
     final add_id = routeArgs['id'];
+    _id = add_id!;
 
     return Scaffold(
       appBar: AppBar(
@@ -267,24 +320,81 @@ class _ViewMyAdvertiseMentState extends State<ViewMyAdvertiseMent> {
                                   ),
                                 ),
 
-                                //Add Feedbacks button
-                                Container(
-                                  alignment: Alignment.center,
-                                  padding: const EdgeInsets.only(
-                                    top: 10.0,
-                                    bottom: 10.0,
-                                  ),
-                                  child: ElevatedButton(
-                                    onPressed: () =>
-                                        _onclickEditAdd(context, add_id!),
-                                    child: const Text(
-                                      "Edit",
-                                      style: TextStyle(
-                                        fontFamily: 'Averta',
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    Container(
+                                      alignment: Alignment.center,
+                                      padding: const EdgeInsets.only(
+                                        top: 10.0,
+                                        bottom: 10.0,
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                          horizontal: 10.0,
+                                        ),
+                                        child: ElevatedButton(
+                                          child: const Text(
+                                            'Edit',
+                                            style: TextStyle(
+                                              color: Colors.blue,
+                                              // fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                          onPressed: () {
+                                            _onclickEditAdd(context, add_id);
+                                          },
+                                          style: ElevatedButton.styleFrom(
+                                            shadowColor: Colors.blue,
+                                            primary: Colors.white,
+                                            side: const BorderSide(
+                                              color: Colors.blue,
+                                              width: 2,
+                                            ),
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 30, vertical: 8),
+                                          ),
+                                        ),
                                       ),
                                     ),
-                                  ),
-                                ),
+
+                                    //delete button
+                                    Container(
+                                      alignment: Alignment.center,
+                                      padding: const EdgeInsets.only(
+                                        top: 10.0,
+                                        bottom: 10.0,
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                          horizontal: 10.0,
+                                        ),
+                                        child: ElevatedButton(
+                                          child: const Text(
+                                            'Delete',
+                                            style: TextStyle(
+                                              color: Colors.red,
+                                              // fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                          onPressed: () {
+                                            showAlertDialog(context);
+                                          },
+                                          style: ElevatedButton.styleFrom(
+                                            shadowColor: Colors.red,
+                                            primary: Colors.white,
+                                            side: const BorderSide(
+                                              color: Colors.red,
+                                              width: 2,
+                                            ),
+                                            padding: const EdgeInsets.symmetric(
+                                                horizontal: 30, vertical: 8),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                )
                               ]), //
                         ],
                       );
