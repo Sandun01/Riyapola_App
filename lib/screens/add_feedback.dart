@@ -4,7 +4,6 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:riyapola_app/widgets/feedbackDialog/custom_dialogbox.dart';
 
-
 class AddFeedback extends StatefulWidget {
   const AddFeedback({Key? key}) : super(key: key);
 
@@ -29,12 +28,14 @@ class _AddFeedbackState extends State<AddFeedback> {
     final _category = routeArgs['category'];
     final _location = routeArgs['location'];
     final _seller = routeArgs['seller'];
-    
-    final _productID = "prod1";//todo
+    final _sellerName = routeArgs['sellerName'];
 
-    String defaultRat = "2.5";
+    final _imageURL = routeArgs['imageURL'];
+
+    final _productID = routeArgs['id'];
+
     String? _feedback;
-    double _rating = 2.5;
+    String? _rating = routeArgs['ratingVal'];
 
     final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -48,8 +49,6 @@ class _AddFeedbackState extends State<AddFeedback> {
         CollectionReference Feedbacks =
             FirebaseFirestore.instance.collection('feedbacks');
 
-
-
         Feedbacks.add({
           'uid': _uid,
           'feedback': _feedback,
@@ -58,10 +57,6 @@ class _AddFeedbackState extends State<AddFeedback> {
         }).then(
           (value) {
             print("Feedbacks Added");
-
-
-            
-
 
             //show final diaolg
             showDialog(
@@ -131,6 +126,20 @@ class _AddFeedbackState extends State<AddFeedback> {
                       ),
                     ),
                   ),
+                  // //.
+                  // //.
+                  // //Image
+                  // Container(
+                  //   alignment: Alignment.center,
+                  //   width: double.infinity,
+                  //   // height: 200,
+                  //   // color: Colors.amber,
+                  //   child: const Image(
+                  //     image: AssetImage(
+                  //       (''+ _imageURL),
+                  //     ),
+                  //   ),
+                  // ),
                   //.
                   //.
                   //Image
@@ -139,11 +148,7 @@ class _AddFeedbackState extends State<AddFeedback> {
                     width: double.infinity,
                     // height: 200,
                     // color: Colors.amber,
-                    child: const Image(
-                      image: AssetImage(
-                        'assets/images/tesla-model3.png',
-                      ),
-                    ),
+                    child: Image.network(_imageURL!),
                   ),
                   //..
                   //..
@@ -261,7 +266,7 @@ class _AddFeedbackState extends State<AddFeedback> {
                     ),
                     // color: Colors.amber,
                     child: Text(
-                      "Seller: " + _seller!,
+                      "Seller: " + _sellerName!,
                       style: const TextStyle(
                         // fontWeight: FontWeight.bold,
                         fontSize: 20.0,
@@ -315,7 +320,7 @@ class _AddFeedbackState extends State<AddFeedback> {
                     ),
                     // color: Colors.amber,
                     child: RatingBar.builder(
-                      initialRating: double.parse(defaultRat),
+                      initialRating: double.parse(_rating!),
                       minRating: 1,
                       direction: Axis.horizontal,
                       allowHalfRating: true,
@@ -326,7 +331,7 @@ class _AddFeedbackState extends State<AddFeedback> {
                         color: Colors.amber,
                       ),
                       onRatingUpdate: (rating) {
-                        _rating = rating;
+                        _rating = rating.toString();
                       },
                     ),
                   ),
