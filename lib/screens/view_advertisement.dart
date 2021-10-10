@@ -33,8 +33,21 @@ class _ViewAdvertisementState extends State<ViewAdvertisement> {
     );
   }
 
-  void _onclickAddFeedback(BuildContext ctx) {
+  void _onclickAddFeedback(BuildContext ctx,String _id,String? _title,String? _price) {
+    
     print("_onclickAddFeedback");
+    Navigator.of(ctx).pushNamed(
+      '/add-feedback-view',
+      arguments: {
+        'id': _id,
+        'title': _title,
+        'price': _price,
+        'category': _category,
+        'location': _location,
+        'seller':_seller,
+        
+      },
+    );
   }
 
   //build
@@ -46,6 +59,7 @@ class _ViewAdvertisementState extends State<ViewAdvertisement> {
     final add_id = routeArgs['id'];
     final _title = routeArgs['title'];
     final _price = routeArgs['price'];
+    final _id = routeArgs['id'];
 
     return Scaffold(
       appBar: AppBar(
@@ -419,73 +433,73 @@ class _ViewAdvertisementState extends State<ViewAdvertisement> {
                     ),
                   ),
                 ),
-                //..
-                //..
-                //All Feedbacks
-                Container(
-                  alignment: Alignment.centerLeft,
-                  padding: const EdgeInsets.only(
-                    top: 10.0,
-                    bottom: 20.0,
-                  ),
-                  child: Column(
-                    //all feedbacks
-                    children: [
-                      Card(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(15.0),
-                        ),
-                        color: const Color(0xffD4D6FF),
-                        margin: const EdgeInsets.only(
-                          right: 20.0,
-                          left: 20.0,
+                   //..
+                    //..
+                    //All Feedbacks
+                    Container(
+                      alignment: Alignment.centerLeft,
+                      padding: const EdgeInsets.only(
+                        top: 10.0,
+                        bottom: 20.0,
+                      ),
+                      child: Column(
+                        //all feedbacks
+                        children: [
+                          Card(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15.0),
+                            ),
+                            color: const Color(0xffD4D6FF),
+                            margin: const EdgeInsets.only(
+                              right: 20.0,
+                              left: 20.0,
+                              top: 10.0,
+                              bottom: 10.0,
+                            ),
+                            elevation: 5,
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: <Widget>[
+                                ListTile(
+                                  title: Text(
+                                    _seller,
+                                    style: const TextStyle(
+                                      fontSize: 15,
+                                    ),
+                                  ),
+                                  subtitle: const Text(
+                                    "Great Job" + "...",
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20,
+                                      color: Colors.black,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    //..
+                    //..
+                    //Add Feedbacks button
+                    Container(
+                        alignment: Alignment.center,
+                        padding: const EdgeInsets.only(
                           top: 10.0,
                           bottom: 10.0,
                         ),
-                        elevation: 5,
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: <Widget>[
-                            ListTile(
-                              title: Text(
-                                _seller,
-                                style: const TextStyle(
-                                  fontSize: 15,
-                                ),
-                              ),
-                              subtitle: const Text(
-                                "Great Job" + "...",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 20,
-                                  color: Colors.black,
-                                ),
-                              ),
+                        child: ElevatedButton(
+                          onPressed: () => _onclickAddFeedback(context,_id!,_title,_price),
+                          child: const Text(
+                            "Write Feedback",
+                            style: TextStyle(
+                              fontFamily: 'Averta',
                             ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                //..
-                //..
-                //Add Feedbacks button
-                Container(
-                    alignment: Alignment.center,
-                    padding: const EdgeInsets.only(
-                      top: 10.0,
-                      bottom: 10.0,
-                    ),
-                    child: ElevatedButton(
-                      onPressed: () => _onclickAddFeedback(context),
-                      child: const Text(
-                        "Write Feedback",
-                        style: TextStyle(
-                          fontFamily: 'Averta',
-                        ),
-                      ),
-                    )),
+                          ),
+                        )),
               ]),
             ],
           ),
