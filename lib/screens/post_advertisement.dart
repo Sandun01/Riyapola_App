@@ -160,10 +160,11 @@ class _PostAdvertisementState extends State<PostAdvertisement> {
         showDialog(
             context: context,
             builder: (BuildContext context) {
-              return const CustomDialogBox(
+              return CustomDialogBox(
                 title: "Success!",
                 descriptions: "Your New Advertisement Posted Successfully!",
                 text: "OK",
+                route: "/my-ads",
               );
             });
       },
@@ -194,15 +195,17 @@ class _PostAdvertisementState extends State<PostAdvertisement> {
         appBar: AppBar(
           backgroundColor: Theme.of(context).colorScheme.primary,
           elevation: 0,
-          title: const Center(
-            child: Padding(
-              padding: EdgeInsets.only(top: 20.0),
-              child: Text(
-                "RiyaPola",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 40,
-                ),
+          title: const Padding(
+            padding: EdgeInsets.only(
+              top: 20.0,
+              bottom: 20.0,
+            ),
+            child: Text(
+              "RiyaPola",
+              // textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 25,
               ),
             ),
           ),

@@ -15,24 +15,13 @@ class MyAdsButton extends StatefulWidget {
 }
 
 class _MyAdsButtonState extends State<MyAdsButton> {
-  // String _id = id;
-  // String _title = "LAND CRUISER V8";
-  // String _description =
-  //     "The Land Cruiser’s robust build and durability has tackled on the most challenging desert tracks and mountain ranges. But the Land Cruiser is not just about tough protection, it offers a comfortable, peaceful drive thanks to sound-absorbing and noise-cancelling materials.";
-
-  // String _id = id;
-  // String _title = title;
-  // String _description = description;
-
   //on click
   void _hadleClick(BuildContext ctx) {
     print("hadle Click add");
     Navigator.of(ctx).pushNamed(
-      '/edit-add',
+      '/view-my-add',
       arguments: {
-        // 'id': _id,
-        // 'title': _title,
-        // 'description': _description,
+        'id': widget.id,
       },
     );
   }

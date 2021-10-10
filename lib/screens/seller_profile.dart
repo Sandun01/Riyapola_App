@@ -14,18 +14,16 @@ class _SellerProfileState extends State<SellerProfile> {
         appBar: AppBar(
           backgroundColor: Theme.of(context).colorScheme.primary,
           elevation: 0,
-          title: const Center(
-            child: Padding(
-              padding: EdgeInsets.only(
-                top: 20.0,
-                bottom: 20.0,
-              ),
-              child: Text(
-                "RiyaPola",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 40,
-                ),
+          title: const Padding(
+            padding: EdgeInsets.only(
+              top: 20.0,
+              bottom: 20.0,
+            ),
+            child: Text(
+              "RiyaPola",
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 20,
               ),
             ),
           ),

@@ -3,13 +3,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class CustomDialogBox extends StatefulWidget {
-  final String title, descriptions, text;
+  final String title, descriptions, text, route;
 
-  const CustomDialogBox({
+  CustomDialogBox({
     Key? key,
     required this.title,
     required this.descriptions,
     required this.text,
+    required this.route,
   }) : super(key: key);
 
   @override
@@ -78,7 +79,7 @@ class _CustomDialogBoxState extends State<CustomDialogBox> {
                 // ignore: deprecated_member_use
                 child: FlatButton(
                     onPressed: () {
-                      Navigator.of(context).pushReplacementNamed('/my-ads');
+                      Navigator.of(context).pushReplacementNamed(widget.route);
                     },
                     color: Colors.blue[400],
                     splashColor: Colors.amberAccent,
