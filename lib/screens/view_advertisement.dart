@@ -15,7 +15,8 @@ class _ViewAdvertisementState extends State<ViewAdvertisement> {
   String _description = "";
   String _imageURL = "";
   String _seller = "Nilan Meegoda";
-  String _ratingVal = "";
+  String _sellerName = "Nilan Meegoda";
+  String _ratingVal = "3.5";
 
   void _onclickViewSellerProfile(BuildContext ctx) {
     print("_onclickViewSellerProfile");
@@ -33,8 +34,23 @@ class _ViewAdvertisementState extends State<ViewAdvertisement> {
     );
   }
 
-  void _onclickAddFeedback(BuildContext ctx) {
-    print("_onclickAddFeedback");
+  void _onclickAddFeedback(
+      BuildContext ctx, String _id, String? _title, String? _price) {
+    print("_onclickAddFeedback: " + _id);
+    Navigator.of(ctx).pushNamed(
+      '/add-feedback-view',
+      arguments: {
+        'id': _id,
+        'title': _title,
+        'price': _price,
+        'category': _category,
+        'location': _location,
+        'seller': _seller,
+        'sellerName': _sellerName,
+        'imageURL': _imageURL,
+        'ratingVal': _ratingVal,
+      },
+    );
   }
 
   //build
@@ -44,8 +60,76 @@ class _ViewAdvertisementState extends State<ViewAdvertisement> {
         ModalRoute.of(context)!.settings.arguments as Map<String, String>;
 
     final add_id = routeArgs['id'];
+    print(add_id);
     final _title = routeArgs['title'];
     final _price = routeArgs['price'];
+    final _id = routeArgs['id'];
+    CollectionReference users = FirebaseFirestore.instance.collection('users');
+
+    Widget seller() {
+      return FutureBuilder(
+        future: users.doc(_seller).get(),
+        builder:
+            (BuildContext context, AsyncSnapshot<DocumentSnapshot> snapshot) {
+          if (snapshot.hasError) {
+            return Text("Something went wrong");
+          }
+
+          if (snapshot.hasData && !snapshot.data!.exists) {
+            return Text("Document does not exist");
+          }
+
+          if (snapshot.connectionState == ConnectionState.done) {
+            Map<String, dynamic> data =
+                snapshot.data!.data() as Map<String, dynamic>;
+            _sellerName = data['name'];
+           
+            return Container(
+                alignment: Alignment.centerLeft,
+                // color: Colors.amber,
+                width: double.infinity,
+                margin: const EdgeInsets.only(
+                  top: 10.0,
+                ),
+                padding: const EdgeInsets.only(
+                  left: 30.0,
+                  right: 20.0,
+                ),
+                // color: Colors.amber,
+                child: Text(
+                  "Seller: ${data['name']}",
+                  style: const TextStyle(
+                    fontSize: 20.0,
+                  ),
+                ));
+          }
+
+          return Text("loading");
+        },
+      );
+    }
+
+    Widget feedbackButton() {
+      //..
+      //..
+      //Add Feedbacks button
+      return Container(
+          alignment: Alignment.center,
+          padding: const EdgeInsets.only(
+            top: 10.0,
+            bottom: 10.0,
+          ),
+          child: ElevatedButton(
+            onPressed: () =>
+                _onclickAddFeedback(context, add_id!, _title, _price),
+            child: const Text(
+              "Write Feedback",
+              style: TextStyle(
+                fontFamily: 'Averta',
+              ),
+            ),
+          ));
+    }
 
     return Scaffold(
       appBar: AppBar(
@@ -101,6 +185,7 @@ class _ViewAdvertisementState extends State<ViewAdvertisement> {
                       _description = snapshot.data!['description'];
                       _imageURL = snapshot.data!['imageUrl'];
                       _category = snapshot.data!['category'];
+                      _seller = snapshot.data!['user'];
                       // _description = adsDocument!['description'];
                       // _seller = adsDocument[''];
                       // _ratingVal = adsDocument['rating'];
@@ -257,30 +342,34 @@ class _ViewAdvertisementState extends State<ViewAdvertisement> {
                                     // ),
                                   ),
                                 ),
-                                //..
-                                //..
-                                //Seller
-                                Container(
-                                  alignment: Alignment.centerLeft,
-                                  // color: Colors.amber,
-                                  width: double.infinity,
-                                  margin: const EdgeInsets.only(
-                                    top: 10.0,
-                                  ),
-                                  padding: const EdgeInsets.only(
-                                    left: 30.0,
-                                    right: 20.0,
-                                  ),
-                                  // color: Colors.amber,
-                                  child: Text(
-                                    "Seller: " + _seller,
-                                    style: const TextStyle(
-                                      // fontWeight: FontWeight.bold,
-                                      fontSize: 18.0,
-                                    ),
-                                    // ),
-                                  ),
-                                ),
+                                //.
+                                //.
+                                //seller
+                                seller(),
+                                // //..
+                                // //..
+                                // //Seller
+                                // Container(
+                                //   alignment: Alignment.centerLeft,
+                                //   // color: Colors.amber,
+                                //   width: double.infinity,
+                                //   margin: const EdgeInsets.only(
+                                //     top: 10.0,
+                                //   ),
+                                //   padding: const EdgeInsets.only(
+                                //     left: 30.0,
+                                //     right: 20.0,
+                                //   ),
+                                //   // color: Colors.amber,
+                                //   child: Text(
+                                //     "Seller: " + _seller,
+                                //     style: const TextStyle(
+                                //       // fontWeight: FontWeight.bold,
+                                //       fontSize: 18.0,
+                                //     ),
+                                //     // ),
+                                //   ),
+                                // ),
                               ]), //
                         ],
                       );
@@ -328,20 +417,15 @@ class _ViewAdvertisementState extends State<ViewAdvertisement> {
                     right: 20.0,
                   ),
                   // color: Colors.amber,
-                  child: RatingBar.builder(
-                    initialRating: 3,
-                    minRating: 1,
+                  child: RatingBarIndicator(
+                    rating: double.parse(_ratingVal),
                     direction: Axis.horizontal,
-                    allowHalfRating: true,
                     itemCount: 5,
                     itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
                     itemBuilder: (context, _) => const Icon(
                       Icons.star,
                       color: Colors.amber,
                     ),
-                    onRatingUpdate: (rating) {
-                      print(rating);
-                    },
                   ),
                 ),
                 //..
@@ -448,7 +532,7 @@ class _ViewAdvertisementState extends State<ViewAdvertisement> {
                           children: <Widget>[
                             ListTile(
                               title: Text(
-                                _seller,
+                                "Rasitha Senevirathne",
                                 style: const TextStyle(
                                   fontSize: 15,
                                 ),
@@ -471,21 +555,8 @@ class _ViewAdvertisementState extends State<ViewAdvertisement> {
                 //..
                 //..
                 //Add Feedbacks button
-                Container(
-                    alignment: Alignment.center,
-                    padding: const EdgeInsets.only(
-                      top: 10.0,
-                      bottom: 10.0,
-                    ),
-                    child: ElevatedButton(
-                      onPressed: () => _onclickAddFeedback(context),
-                      child: const Text(
-                        "Write Feedback",
-                        style: TextStyle(
-                          fontFamily: 'Averta',
-                        ),
-                      ),
-                    )),
+
+                feedbackButton(),
               ]),
             ],
           ),

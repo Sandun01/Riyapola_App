@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class SellerProfile extends StatefulWidget {
   const SellerProfile({Key? key}) : super(key: key);
@@ -130,6 +131,41 @@ class _SellerProfileState extends State<SellerProfile> {
                           color: Colors.black,
                         ),
                         onSaved: (value) {},
+                      ),
+                    ),
+                                  //..
+                    //..
+                    //rating bar
+                    SizedBox(
+                      height: 20,
+                    ),
+                    Container(
+                      alignment: Alignment.center,
+                      // color: Colors.amber,
+                      width: double.infinity,
+                      margin: const EdgeInsets.only(
+                        top: 10.0,
+                        bottom: 20.0,
+                      ),
+                      padding: const EdgeInsets.only(
+                        left: 30.0,
+                        right: 20.0,
+                      ),
+                      // color: Colors.amber,
+                      child: RatingBarIndicator(
+                        
+                        rating: 2.5,//double.parse(_ratingVal),
+                        
+                        direction: Axis.horizontal,
+                        
+                        itemCount: 5,
+                        itemPadding: EdgeInsets.symmetric(horizontal: 4.0),
+                        itemBuilder: (context, _) => const Icon(
+                          Icons.star,
+                          color: Colors.amber,
+                        ),
+                     
+                        
                       ),
                     ),
                   ],
