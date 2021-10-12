@@ -6,6 +6,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:riyapola_app/services/auth_services.dart';
 import 'package:provider/provider.dart';
+import 'package:riyapola_app/widgets/dialogbox/custom_dialogbox_register.dart';
 
 class Register extends StatefulWidget {
   const Register({Key? key}) : super(key: key);
@@ -17,6 +18,7 @@ class Register extends StatefulWidget {
 class _RegisterState extends State<Register> {
   TextEditingController emailController = new TextEditingController();
   TextEditingController passwordController = new TextEditingController();
+  TextEditingController confirmpasswordController = new TextEditingController();
   TextEditingController nameController = new TextEditingController();
   TextEditingController mobileController = new TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -39,6 +41,30 @@ class _RegisterState extends State<Register> {
       '/home',
       arguments: {},
     );
+  }
+
+  // void _showErrorDialog(String message){
+  //   _showErrorDialog(
+  //     context:context,
+  //     bilder:(ctx) => AlertDialog(
+  //       title:Text("An Error occured"),
+  //       content: Text(message),
+  //       actions: <Widget>[
+  //
+  //       ],
+  //     )
+  //   )
+  // }
+  void showDialogBox(String errormessage) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return CustomDialogBox(
+            title: "Error...!",
+            descriptions: errormessage,
+            text: "OK",
+          );
+        });
   }
 
   @override
@@ -290,7 +316,7 @@ class _RegisterState extends State<Register> {
                               padding: const EdgeInsets.symmetric(
                                   horizontal: 20.0, vertical: 10.0),
                               child: TextFormField(
-                                controller: passwordController,
+                                controller: confirmpasswordController,
                                 keyboardType: TextInputType.text,
                                 // controller: _userPasswordController,
                                 obscureText:
@@ -306,7 +332,7 @@ class _RegisterState extends State<Register> {
                                   labelStyle: TextStyle(
                                     color: Colors.white,
                                   ),
-                                  // suffixIcon: Icon(Icons.visibility),
+                                  suffixIcon: Icon(Icons.visibility),
                                   // suffixIcon: IconButton(
                                   //   icon: Icon(_passwordVisible ? Icons.visibility : Icons.visibility_off,
                                   //     // color: Theme.of(context).primaryColorDark,
@@ -382,29 +408,42 @@ class _RegisterState extends State<Register> {
                       onPressed: () {
                         final String email = emailController.text.trim();
                         final String password = passwordController.text.trim();
+                        final String confirmpassword = confirmpasswordController.text.trim();
                         final String name = nameController.text.toString();
                         final String mobile = mobileController.text.trim();
 
                         if(email.isEmpty){
                           print("Email is Empty");
+                          showDialogBox("Email is empty");
                         } else {
-                          if(password.isEmpty){
+                          if(password.isEmpty && password.length < 6){
                             print("Password is Empty");
-                          } else {
-                            context.read<AuthService>().signUp(
+                            showDialogBox("Password need contain more than 6 character");
+                          }
+                          if(password != confirmpassword){
+                            print("Password does not match");
+                            showDialogBox("Password did not match");
+                          }
+                          else {
+                            context.read<AuthService>().signUp(context,
                               email,
                               password,
                               name,
                               mobile
                             ).then((value) async {
-                              User? user = FirebaseAuth.instance.currentUser;
+                              if(value == "-1"){
+                                showDialogBox("Email already exists");
+                              }
+                              else{
+                                User? user = FirebaseAuth.instance.currentUser;
 
-                              await FirebaseFirestore.instance.collection("users").doc(user!.uid).set({
-                                'uid': user.uid,
-                                'email': email,
-                                'name' : name,
-                                'mobile' : mobile,
-                              });
+                                await FirebaseFirestore.instance.collection("users").doc(user!.uid).set({
+                                  'uid': user.uid,
+                                  'email': email,
+                                  'name' : name,
+                                  'mobile' : mobile,
+                                });
+                              }
                             });
                           }
                         }

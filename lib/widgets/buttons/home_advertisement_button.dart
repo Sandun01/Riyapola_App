@@ -103,7 +103,7 @@ class _HomeAdvertisementButtonState extends State<HomeAdvertisementButton> {
                           ),
                         ),
                         Padding(
-                          padding: EdgeInsets.all(10.0),
+                          padding: EdgeInsets.only(top: 10,bottom: 10),
                           child: Text(
                             "Rs." + _price,
                             style: const TextStyle(
