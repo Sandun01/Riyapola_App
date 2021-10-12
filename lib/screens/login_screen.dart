@@ -15,7 +15,6 @@ import 'main_screen.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
-
   @override
   _LoginState createState() => _LoginState();
 }
@@ -186,7 +185,7 @@ class _LoginState extends State<Login> {
                                 // controller: _userPasswordController,
                                 obscureText:
                                     !_passwordVisible, //This will obscure text dynamically
-                                decoration: const InputDecoration(
+                                decoration:  InputDecoration(
                                   icon: const Icon(Icons.password,
                                       color: Colors.white),
                                   hintText: 'Password',
@@ -197,21 +196,20 @@ class _LoginState extends State<Login> {
                                   labelStyle: TextStyle(
                                     color: Colors.white,
                                   ),
-                                  // suffixIcon: IconButton(
-                                  //   icon: Icon(
-                                  //     // Based on passwordVisible state choose the icon
-                                  //     _passwordVisible
-                                  //         ? Icons.visibility
-                                  //         : Icons.visibility_off,
-                                  //     color: Theme.of(context).primaryColorDark,
-                                  //   ),
-                                  //   onPressed: () {
-                                  //     // Update the state i.e. toogle the state of passwordVisible variable
-                                  //     setState(() {
-                                  //       _passwordVisible = !_passwordVisible;
-                                  //     });
-                                  //   },
-                                  // ),
+                                  suffixIcon: IconButton(
+                                    icon: Icon(
+                                      _passwordVisible
+                                          ? Icons.visibility
+                                          : Icons.visibility_off,
+                                      color: Colors.white,
+                                    ),
+                                    onPressed: () {
+                                      // Update the state i.e. toogle the state of passwordVisible variable
+                                      setState(() {
+                                        _passwordVisible = !_passwordVisible;
+                                      });
+                                    },
+                                  ),
                                   enabledBorder: UnderlineInputBorder(
                                     borderSide: BorderSide(color: Colors.white),
                                   ),

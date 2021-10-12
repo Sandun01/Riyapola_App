@@ -22,9 +22,11 @@ class _RegisterState extends State<Register> {
   TextEditingController nameController = new TextEditingController();
   TextEditingController mobileController = new TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  late bool _passwordVisible = true;
+  late bool _passwordVisible;
+  late bool _confirmpasswordVisible;
   void initState() {
     _passwordVisible = false;
+    _confirmpasswordVisible = false;
   }
 
   void _signUpButtonPress(BuildContext ctx) {
@@ -266,7 +268,7 @@ class _RegisterState extends State<Register> {
                                 // controller: _userPasswordController,
                                 obscureText:
                                     !_passwordVisible, //This will obscure text dynamically
-                                decoration: const InputDecoration(
+                                decoration:  InputDecoration(
                                   icon: const Icon(Icons.password,
                                       color: Colors.white),
                                   hintText: 'Password',
@@ -277,17 +279,20 @@ class _RegisterState extends State<Register> {
                                   labelStyle: TextStyle(
                                     color: Colors.white,
                                   ),
-                                  // suffixIcon: Icon(Icons.visibility),
-                                  // suffixIcon: IconButton(
-                                  //   icon: Icon(_passwordVisible ? Icons.visibility : Icons.visibility_off,
-                                  //     // color: Theme.of(context).primaryColorDark,
-                                  //   ),
-                                  //   onPressed: () {
-                                  //     setState(() {
-                                  //       _passwordVisible = !_passwordVisible;
-                                  //     }),
-                                  //   },
-                                  // ),
+                                  suffixIcon: IconButton(
+                                    icon: Icon(
+                                      _passwordVisible
+                                          ? Icons.visibility
+                                          : Icons.visibility_off,
+                                      color: Colors.white,
+                                    ),
+                                    onPressed: () {
+                                      // Update the state i.e. toogle the state of passwordVisible variable
+                                      setState(() {
+                                        _passwordVisible = !_passwordVisible;
+                                      });
+                                    },
+                                  ),
                                   enabledBorder: UnderlineInputBorder(
                                     borderSide: BorderSide(color: Colors.white),
                                   ),
@@ -320,8 +325,8 @@ class _RegisterState extends State<Register> {
                                 keyboardType: TextInputType.text,
                                 // controller: _userPasswordController,
                                 obscureText:
-                                    !_passwordVisible, //This will obscure text dynamically
-                                decoration: const InputDecoration(
+                                    !_confirmpasswordVisible, //This will obscure text dynamically
+                                decoration:  InputDecoration(
                                   icon: const Icon(Icons.password,
                                       color: Colors.white),
                                   hintText: 'Confirm Password',
@@ -332,17 +337,20 @@ class _RegisterState extends State<Register> {
                                   labelStyle: TextStyle(
                                     color: Colors.white,
                                   ),
-                                  suffixIcon: Icon(Icons.visibility),
-                                  // suffixIcon: IconButton(
-                                  //   icon: Icon(_passwordVisible ? Icons.visibility : Icons.visibility_off,
-                                  //     // color: Theme.of(context).primaryColorDark,
-                                  //   ),
-                                  //   onPressed: () {
-                                  //     setState(() {
-                                  //       _passwordVisible = !_passwordVisible;
-                                  //     }),
-                                  //   },
-                                  // ),
+                                  suffixIcon: IconButton(
+                                    icon: Icon(
+                                      _confirmpasswordVisible
+                                          ? Icons.visibility
+                                          : Icons.visibility_off,
+                                      color: Colors.white,
+                                    ),
+                                    onPressed: () {
+                                      // Update the state i.e. toogle the state of passwordVisible variable
+                                      setState(() {
+                                        _confirmpasswordVisible = !_confirmpasswordVisible;
+                                      });
+                                    },
+                                  ),
                                   enabledBorder: UnderlineInputBorder(
                                     borderSide: BorderSide(color: Colors.white),
                                   ),
