@@ -13,7 +13,7 @@ class _userImageState extends State<userImage> {
   late File? _pickedImage = null;
   Future<void> _pickImage() async {
     final pickedImagedFile = await await ImagePicker.platform.pickImage(
-      source: ImageSource.camera,
+      source: ImageSource.gallery,
       imageQuality: 50,
       maxWidth: 150,
       // maxWidth: 600, //crop image and save size
