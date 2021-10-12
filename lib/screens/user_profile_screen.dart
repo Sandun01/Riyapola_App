@@ -203,7 +203,7 @@ class _ProfileState extends State<Profile> {
     final uid = user!.uid;
     return Scaffold(
       body: SingleChildScrollView(
-          child:
+        child:
         StreamBuilder(
           stream: FirebaseFirestore.instance.collection('users').doc(uid).snapshots(),
           builder: (BuildContext context,

@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:riyapola_app/services/auth_services.dart';
 import 'package:provider/provider.dart';
 import 'package:riyapola_app/widgets/dialogbox/custom_dialogbox_register.dart';
@@ -190,6 +191,11 @@ class _RegisterState extends State<Register> {
                                   horizontal: 20.0, vertical: 10.0),
                               child: TextFormField(
                                 controller: mobileController,
+                                keyboardType: TextInputType.number,
+                                inputFormatters: <TextInputFormatter>[
+                                  // ignore: deprecated_member_use
+                                  WhitelistingTextInputFormatter.digitsOnly,
+                                ],
                                 decoration: const InputDecoration(
                                   icon: const Icon(Icons.mobile_friendly,
                                       color: Colors.white),
