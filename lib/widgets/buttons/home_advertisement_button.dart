@@ -1,7 +1,16 @@
 import 'package:flutter/material.dart';
 
 class HomeAdvertisementButton extends StatefulWidget {
-  const HomeAdvertisementButton({Key? key}) : super(key: key);
+  final String id, addTitle, location, price, addImage;
+
+  HomeAdvertisementButton({
+    Key? key,
+    required this.id,
+    required this.addTitle,
+    required this.price,
+    required this.location,
+    required this.addImage,
+  }) : super(key: key);
 
   @override
   _HomeAdvertisementButtonState createState() =>
@@ -9,20 +18,21 @@ class HomeAdvertisementButton extends StatefulWidget {
 }
 
 class _HomeAdvertisementButtonState extends State<HomeAdvertisementButton> {
-  String _id = "123";
-  String _title = "Tesla - Model 3";
-  String _price = "2000 0000";
-  String _location = "Colombo";
+  // String _id = "123";
+  // String _title = "Tesla - Model 3";
+  // String _price = "2000 0000";
+  // String _location = "Colombo";
 
   //on click
   void _hadleClick(BuildContext ctx) {
-    print("hadle Click add");
+    // print("hadle Click add");
+    print(widget.id);
     Navigator.of(ctx).pushNamed(
       '/view-add',
       arguments: {
-        'id': _id,
-        'title': _title,
-        'price': _price,
+        'id': widget.id,
+        'title': widget.addTitle,
+        'price': widget.price,
       },
     );
   }
@@ -55,11 +65,11 @@ class _HomeAdvertisementButtonState extends State<HomeAdvertisementButton> {
                 left: 30.0,
               ),
               child: Text(
-                _title,
+                widget.addTitle,
                 style: const TextStyle(
                   // fontWeight: FontWeight.bold,
-                  fontSize: 40,
-                  fontFamily: "AguafinaScript",
+                  fontSize: 20,
+                  // fontFamily: "AguafinaScript",
                 ),
               ),
             ),
@@ -71,11 +81,7 @@ class _HomeAdvertisementButtonState extends State<HomeAdvertisementButton> {
               width: double.infinity,
               // height: 200,
               // color: Colors.amber,
-              child: const Image(
-                image: AssetImage(
-                  'assets/images/tesla-model3.png',
-                ),
-              ),
+              child: Image.network(widget.addImage),
             ),
             //.
             //.
@@ -105,11 +111,11 @@ class _HomeAdvertisementButtonState extends State<HomeAdvertisementButton> {
                         Padding(
                           padding: EdgeInsets.all(10.0),
                           child: Text(
-                            "Rs." + _price,
+                            "Rs." + widget.price,
                             style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               color: Color(0xff304FFE),
-                              fontSize: 20.0,
+                              fontSize: 16.0,
                             ),
                           ),
                         ),
@@ -137,11 +143,11 @@ class _HomeAdvertisementButtonState extends State<HomeAdvertisementButton> {
                             right: 20.0,
                           ),
                           child: Text(
-                            _location,
+                            widget.location,
                             style: const TextStyle(
                               fontWeight: FontWeight.bold,
                               color: Color(0xff304FFE),
-                              fontSize: 20.0,
+                              fontSize: 16.0,
                             ),
                           ),
                         ),

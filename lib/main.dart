@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:riyapola_app/services/auth_services.dart';
+import 'package:riyapola_app/widgets/buttons/my_ad_view.dart';
 import 'screens/user_profile_screen.dart';
 import 'screens/seller_profile.dart';
 import './screens/splash_screen.dart';
@@ -69,7 +70,9 @@ class MyApp extends StatelessWidget {
           '/home': (ctx) => MainScreen(),
           // '/home': (ctx) => Home(),
           '/view-add': (ctx) => ViewAdvertisement(),
+          '/view-my-add': (ctx) => ViewMyAdvertiseMent(),
           '/edit-add': (ctx) => EditAdvertisement(),
+          '/categories': (ctx) => CategoryScreen(),
 
           //notifications
           '/single-chat-view': (ctx) => ChatScreen(),
@@ -77,6 +80,8 @@ class MyApp extends StatelessWidget {
           '/my-chat-notifications': (ctx) => my_notications(),
 
           '/seller-profile': (ctx) => SellerProfile(),
+
+          '/user-profile': (ctx) => Profile(),
 
           //normal routes
           '/post-add': (ctx) => PostAdvertisement(),

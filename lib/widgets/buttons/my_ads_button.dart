@@ -1,27 +1,27 @@
 import 'package:flutter/material.dart';
 
 class MyAdsButton extends StatefulWidget {
-  const MyAdsButton({Key? key}) : super(key: key);
+  final String id, addTitle, description, addImage;
+  const MyAdsButton({
+    Key? key,
+    required this.id,
+    required this.addTitle,
+    required this.description,
+    required this.addImage,
+  }) : super(key: key);
 
   @override
   _MyAdsButtonState createState() => _MyAdsButtonState();
 }
 
 class _MyAdsButtonState extends State<MyAdsButton> {
-  String _id = "123";
-  String _title = "LAND CRUISER V8";
-  String _description =
-      "The Land Cruiser’s robust build and durability has tackled on the most challenging desert tracks and mountain ranges. But the Land Cruiser is not just about tough protection, it offers a comfortable, peaceful drive thanks to sound-absorbing and noise-cancelling materials.";
-
   //on click
   void _hadleClick(BuildContext ctx) {
     print("hadle Click add");
     Navigator.of(ctx).pushNamed(
-      '/edit-add',
+      '/view-my-add',
       arguments: {
-        'id': _id,
-        'title': _title,
-        'description': _description,
+        'id': widget.id,
       },
     );
   }
@@ -48,21 +48,15 @@ class _MyAdsButtonState extends State<MyAdsButton> {
             contentPadding: const EdgeInsets.all(
               20.0,
             ),
-            leading: const Image(
-              image: AssetImage(
-                'assets/images/sample_vehicle.jpg',
-              ),
-            ),
+            leading: Image.network(widget.addImage),
             title: Text(
-              _title,
+              widget.addTitle,
               style: const TextStyle(
                 fontWeight: FontWeight.bold,
                 fontSize: 20,
               ),
             ),
-            subtitle: Text(
-              _description.substring(0, 90) + "...",
-            ),
+            subtitle: Text(widget.description),
           ),
         ],
       ),
