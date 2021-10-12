@@ -9,12 +9,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:provider/provider.dart';
 import 'package:riyapola_app/screens/user_profile_screen.dart';
 import 'package:riyapola_app/services/auth_services.dart';
+import '../widgets/dialogbox/user_error_handling.dart';
 
 import 'main_screen.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
-
   @override
   _LoginState createState() => _LoginState();
 }
@@ -45,24 +45,20 @@ class _LoginState extends State<Login> {
     );
   }
 
-  showError(String errormessage) {
+
+  void showDialogBox(String errormessage) {
     showDialog(
         context: context,
         builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text('ERROR'),
-            content: Text(errormessage),
-            actions: <Widget>[
-              FlatButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: Text('OK'))
-            ],
+          return CustomDialogBox(
+            title: "Error...!",
+            descriptions: errormessage,
+            text: "OK",
           );
-        }
-    );
+        });
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -189,7 +185,7 @@ class _LoginState extends State<Login> {
                                 // controller: _userPasswordController,
                                 obscureText:
                                     !_passwordVisible, //This will obscure text dynamically
-                                decoration: const InputDecoration(
+                                decoration:  InputDecoration(
                                   icon: const Icon(Icons.password,
                                       color: Colors.white),
                                   hintText: 'Password',
@@ -200,17 +196,20 @@ class _LoginState extends State<Login> {
                                   labelStyle: TextStyle(
                                     color: Colors.white,
                                   ),
-                                  // suffixIcon: Icon(Icons.visibility),
-                                  // suffixIcon: IconButton(
-                                  //   icon: Icon(_passwordVisible ? Icons.visibility : Icons.visibility_off,
-                                  //     // color: Theme.of(context).primaryColorDark,
-                                  //   ),
-                                  //   onPressed: () {
-                                  //     setState(() {
-                                  //       _passwordVisible = !_passwordVisible;
-                                  //     }),
-                                  //   },
-                                  // ),
+                                  suffixIcon: IconButton(
+                                    icon: Icon(
+                                      _passwordVisible
+                                          ? Icons.visibility
+                                          : Icons.visibility_off,
+                                      color: Colors.white,
+                                    ),
+                                    onPressed: () {
+                                      // Update the state i.e. toogle the state of passwordVisible variable
+                                      setState(() {
+                                        _passwordVisible = !_passwordVisible;
+                                      });
+                                    },
+                                  ),
                                   enabledBorder: UnderlineInputBorder(
                                     borderSide: BorderSide(color: Colors.white),
                                   ),
@@ -265,15 +264,26 @@ class _LoginState extends State<Login> {
 
                           if(email.isEmpty){
                             print("Email is Empty");
+                            showDialogBox("Email is Empty");
                           } else {
                             if(password.isEmpty){
                               print("Password is Empty");
+                              showDialogBox("Password is Empty");
                             } else {
                               context.read<AuthService>().login(
                                 context,
                                 email,
                                 password,
-                              );
+                              ).then((value) {
+                                  print(value);
+                                  if(value == "-1"){
+                                    showDialogBox("Invalid Credentials");
+                                  }
+                              });
+                              //
+                              // print(x);
+                              // print("lghkjghlgfkjhghjgfhjgfhlk");
+
                             }
                           }
                         },
@@ -286,9 +296,18 @@ class _LoginState extends State<Login> {
                         ),
                       ),
                     ),
+
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
+
+                        const Text(
+                          "If you do not have account",
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 16,
+                          ),
+                        ),
                         //sign up text
                         TextButton(
                           style: TextButton.styleFrom(
@@ -299,17 +318,10 @@ class _LoginState extends State<Login> {
                             "Sign Up",
                             style: TextStyle(
                               color: Colors.blue,
-                              fontSize: 20,
+                              fontSize: 16,
                               fontFamily: 'Averta',
                               fontWeight: FontWeight.bold,
                             ),
-                          ),
-                        ),
-                        const Text(
-                          "to Start Explore",
-                          style: TextStyle(
-                            color: Colors.black,
-                            fontSize: 20,
                           ),
                         ),
                       ],

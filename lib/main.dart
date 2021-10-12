@@ -31,6 +31,7 @@ void main() async {
   runApp(MyApp());
 }
 
+// ignore: must_be_immutable
 class MyApp extends StatelessWidget {
   Color appPrimaryColor = const Color(0xff0094FF);
   Color appPrimaryColorDark = const Color(0xff0077CD);
@@ -121,6 +122,11 @@ class AuthWrapper extends StatelessWidget {
     final user = context.watch<User?>();
 
     if (user != null) {
+      // final FirebaseAuth auth = FirebaseAuth.instance;
+      //print("43543543543" + user.uid);
+      // final User? user3 = auth.currentUser;
+      // final uid = user3!.uid;
+      print("User Id : " + user.uid);
       return MainScreen();
     }
     return SplashScreen();

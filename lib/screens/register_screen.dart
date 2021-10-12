@@ -5,10 +5,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:riyapola_app/services/auth_services.dart';
 import 'package:provider/provider.dart';
 import 'package:riyapola_app/widgets/pickers/user_image_picker.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:riyapola_app/widgets/dialogbox/custom_dialogbox_register.dart';
 
 class Register extends StatefulWidget {
   const Register({Key? key}) : super(key: key);
@@ -20,6 +22,7 @@ class Register extends StatefulWidget {
 class _RegisterState extends State<Register> {
   TextEditingController emailController = new TextEditingController();
   TextEditingController passwordController = new TextEditingController();
+  TextEditingController confirmpasswordController = new TextEditingController();
   TextEditingController nameController = new TextEditingController();
   TextEditingController mobileController = new TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -30,8 +33,10 @@ class _RegisterState extends State<Register> {
     _userImageFile = image;
   }
 
+  late bool _confirmpasswordVisible;
   void initState() {
     _passwordVisible = false;
+    _confirmpasswordVisible = false;
   }
 
   void _signUpButtonPress(BuildContext ctx) {
@@ -48,6 +53,30 @@ class _RegisterState extends State<Register> {
       '/home',
       arguments: {},
     );
+  }
+
+  // void _showErrorDialog(String message){
+  //   _showErrorDialog(
+  //     context:context,
+  //     bilder:(ctx) => AlertDialog(
+  //       title:Text("An Error occured"),
+  //       content: Text(message),
+  //       actions: <Widget>[
+  //
+  //       ],
+  //     )
+  //   )
+  // }
+  void showDialogBox(String errormessage) {
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return CustomDialogBox(
+            title: "Error...!",
+            descriptions: errormessage,
+            text: "OK",
+          );
+        });
   }
 
   @override
@@ -172,6 +201,11 @@ class _RegisterState extends State<Register> {
                                   horizontal: 20.0, vertical: 5.0),
                               child: TextFormField(
                                 controller: mobileController,
+                                keyboardType: TextInputType.number,
+                                inputFormatters: <TextInputFormatter>[
+                                  // ignore: deprecated_member_use
+                                  WhitelistingTextInputFormatter.digitsOnly,
+                                ],
                                 decoration: const InputDecoration(
                                   icon: const Icon(Icons.mobile_friendly,
                                       color: Colors.white),
@@ -250,7 +284,7 @@ class _RegisterState extends State<Register> {
                                 // controller: _userPasswordController,
                                 obscureText:
                                     !_passwordVisible, //This will obscure text dynamically
-                                decoration: const InputDecoration(
+                                decoration: InputDecoration(
                                   icon: const Icon(Icons.password,
                                       color: Colors.white),
                                   hintText: 'Password',
@@ -261,17 +295,20 @@ class _RegisterState extends State<Register> {
                                   labelStyle: TextStyle(
                                     color: Colors.white,
                                   ),
-                                  // suffixIcon: Icon(Icons.visibility),
-                                  // suffixIcon: IconButton(
-                                  //   icon: Icon(_passwordVisible ? Icons.visibility : Icons.visibility_off,
-                                  //     // color: Theme.of(context).primaryColorDark,
-                                  //   ),
-                                  //   onPressed: () {
-                                  //     setState(() {
-                                  //       _passwordVisible = !_passwordVisible;
-                                  //     }),
-                                  //   },
-                                  // ),
+                                  suffixIcon: IconButton(
+                                    icon: Icon(
+                                      _passwordVisible
+                                          ? Icons.visibility
+                                          : Icons.visibility_off,
+                                      color: Colors.white,
+                                    ),
+                                    onPressed: () {
+                                      // Update the state i.e. toogle the state of passwordVisible variable
+                                      setState(() {
+                                        _passwordVisible = !_passwordVisible;
+                                      });
+                                    },
+                                  ),
                                   enabledBorder: UnderlineInputBorder(
                                     borderSide: BorderSide(color: Colors.white),
                                   ),
@@ -300,12 +337,12 @@ class _RegisterState extends State<Register> {
                               padding: const EdgeInsets.symmetric(
                                   horizontal: 20.0, vertical: 5.0),
                               child: TextFormField(
-                                controller: passwordController,
+                                controller: confirmpasswordController,
                                 keyboardType: TextInputType.text,
                                 // controller: _userPasswordController,
                                 obscureText:
-                                    !_passwordVisible, //This will obscure text dynamically
-                                decoration: const InputDecoration(
+                                    !_confirmpasswordVisible, //This will obscure text dynamically
+                                decoration: InputDecoration(
                                   icon: const Icon(Icons.password,
                                       color: Colors.white),
                                   hintText: 'Confirm Password',
@@ -316,17 +353,21 @@ class _RegisterState extends State<Register> {
                                   labelStyle: TextStyle(
                                     color: Colors.white,
                                   ),
-                                  // suffixIcon: Icon(Icons.visibility),
-                                  // suffixIcon: IconButton(
-                                  //   icon: Icon(_passwordVisible ? Icons.visibility : Icons.visibility_off,
-                                  //     // color: Theme.of(context).primaryColorDark,
-                                  //   ),
-                                  //   onPressed: () {
-                                  //     setState(() {
-                                  //       _passwordVisible = !_passwordVisible;
-                                  //     }),
-                                  //   },
-                                  // ),
+                                  suffixIcon: IconButton(
+                                    icon: Icon(
+                                      _confirmpasswordVisible
+                                          ? Icons.visibility
+                                          : Icons.visibility_off,
+                                      color: Colors.white,
+                                    ),
+                                    onPressed: () {
+                                      // Update the state i.e. toogle the state of passwordVisible variable
+                                      setState(() {
+                                        _confirmpasswordVisible =
+                                            !_confirmpasswordVisible;
+                                      });
+                                    },
+                                  ),
                                   enabledBorder: UnderlineInputBorder(
                                     borderSide: BorderSide(color: Colors.white),
                                   ),
@@ -392,18 +433,21 @@ class _RegisterState extends State<Register> {
                       onPressed: () {
                         final String email = emailController.text.trim();
                         final String password = passwordController.text.trim();
+                        final String confirmpassword =
+                            confirmpasswordController.text.trim();
                         final String name = nameController.text.toString();
                         final String mobile = mobileController.text.trim();
 
                         if (email.isEmpty) {
                           print("Email is Empty");
+                          showDialogBox("Email is empty");
                         } else {
                           if (password.isEmpty) {
                             print("Password is Empty");
                           } else {
                             context
                                 .read<AuthService>()
-                                .signUp(email, password, name, mobile)
+                                .signUp(context, email, password, name, mobile)
                                 .then((value) async {
                               User? user = FirebaseAuth.instance.currentUser;
 
