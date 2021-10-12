@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -6,6 +7,8 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:riyapola_app/services/auth_services.dart';
 import 'package:provider/provider.dart';
+import 'package:riyapola_app/widgets/pickers/user_image_picker.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 
 class Register extends StatefulWidget {
   const Register({Key? key}) : super(key: key);
@@ -21,6 +24,12 @@ class _RegisterState extends State<Register> {
   TextEditingController mobileController = new TextEditingController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   late bool _passwordVisible = true;
+  late File? _userImageFile = null;
+
+  void _pickedImage(File image) {
+    _userImageFile = image;
+  }
+
   void initState() {
     _passwordVisible = false;
   }
@@ -89,9 +98,10 @@ class _RegisterState extends State<Register> {
                         ),
                       ),
                     ),
+                    userImage(_pickedImage),
                     Padding(
                       padding: const EdgeInsets.only(
-                          left: 40.0, top: 40.0, right: 20.0, bottom: 0.0),
+                          left: 40.0, top: 0, right: 20.0, bottom: 0.0),
                       child: Row(
                         children: [
                           Text(
@@ -122,7 +132,7 @@ class _RegisterState extends State<Register> {
                           children: <Widget>[
                             Padding(
                               padding: const EdgeInsets.symmetric(
-                                  horizontal: 20.0, vertical: 10.0),
+                                  horizontal: 20.0, vertical: 5.0),
                               child: TextFormField(
                                 controller: nameController,
                                 decoration: const InputDecoration(
@@ -159,7 +169,7 @@ class _RegisterState extends State<Register> {
                             ),
                             Padding(
                               padding: const EdgeInsets.symmetric(
-                                  horizontal: 20.0, vertical: 10.0),
+                                  horizontal: 20.0, vertical: 5.0),
                               child: TextFormField(
                                 controller: mobileController,
                                 decoration: const InputDecoration(
@@ -196,7 +206,7 @@ class _RegisterState extends State<Register> {
                             ),
                             Padding(
                               padding: const EdgeInsets.symmetric(
-                                  horizontal: 20.0, vertical: 10.0),
+                                  horizontal: 20.0, vertical: 5.0),
                               child: TextFormField(
                                 controller: emailController,
                                 decoration: const InputDecoration(
@@ -233,7 +243,7 @@ class _RegisterState extends State<Register> {
                             ),
                             Padding(
                               padding: const EdgeInsets.symmetric(
-                                  horizontal: 20.0, vertical: 10.0),
+                                  horizontal: 20.0, vertical: 5.0),
                               child: TextFormField(
                                 controller: passwordController,
                                 keyboardType: TextInputType.text,
@@ -288,7 +298,7 @@ class _RegisterState extends State<Register> {
                             ),
                             Padding(
                               padding: const EdgeInsets.symmetric(
-                                  horizontal: 20.0, vertical: 10.0),
+                                  horizontal: 20.0, vertical: 5.0),
                               child: TextFormField(
                                 controller: passwordController,
                                 keyboardType: TextInputType.text,
@@ -397,6 +407,15 @@ class _RegisterState extends State<Register> {
                                 .then((value) async {
                               User? user = FirebaseAuth.instance.currentUser;
 
+                              final ref = FirebaseStorage.instance
+                                  .ref()
+                                  .child('user_image')
+                                  .child(user!.uid + '.jpg');
+
+                              await ref.putFile(_userImageFile!);
+
+                              final url = await ref.getDownloadURL();
+
                               await FirebaseFirestore.instance
                                   .collection("users")
                                   .doc(user!.uid)
@@ -405,6 +424,7 @@ class _RegisterState extends State<Register> {
                                 'email': email,
                                 'name': name,
                                 'mobile': mobile,
+                                'image_url': url,
                               });
                             });
                           }
